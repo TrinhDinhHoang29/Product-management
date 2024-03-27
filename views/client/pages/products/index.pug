@@ -1,4 +1,21 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/box-head.pug
 block main
-    h1 Đây là trang products
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Danh sách sản phẩm")
+    .container
+        .row 
+            .col-4.mb-3
+                .product-item.py-3.px-3.border
+                    .inner-image
+                        a(href="")
+                            img(src="https://kinperfume.com/wp-content/uploads/2019/02/Jo-malone-English-Pear-Freesia-100ml.jpg", alt="")  
+                    .inner-content 
+                        h4.inner-title DiorSauvageEDP
+                        .inner-price-new 80$
+                        .inner-price-old 100$
+                        .inner-add-cart.text-center
+                            button.btn.btn-success.btn-add Thêm vào giỏ
+                
