@@ -1,0 +1,7 @@
+#File module NPM
+/node_modules
+
+
+
+# File env không cần tải lên git
+.env
