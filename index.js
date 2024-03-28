@@ -1,7 +1,9 @@
 require('dotenv').config()
 const express= require('express');
 const app = express();
-const routes= require("./routes/client/index.route");
+const routesClient= require("./routes/client/index.route");
+const routesAdmin= require("./routes/admin/index.router");
+
 const port = process.env.PORT;
 const database = require("./config/database");
 
@@ -11,8 +13,8 @@ app.set("view engine","pug");
 app.use(express.static("public"));
 app.set(express.urlencoded());
 
-routes(app);
-
+routesClient(app);
+routesAdmin(app);
 app.listen(port,()=>{
     console.log("Đã chạy với cổng: "+port
     );

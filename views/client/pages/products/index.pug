@@ -9,15 +9,15 @@ block main
         .row 
             each item in products 
                 .col-4.mb-3
-                    .product-item.py-3.px-3.border
-                        .inner-image
+                    .product-item.py-3.px-3.card
+                        .inner-image.card-img-top
                             a(href="")
                                 img(src=item.thumbnail, alt="")  
-                        .inner-content 
-                            h4.inner-title DiorSauvageEDP
-                            .inner-price-new #{item.price} $
-                            .inner-price-old 100$
-                            .inner-status #{item.description}
+                        .inner-content.card-body 
+                            .inner-title.card-title DiorSauvageEDP
+                            .inner-price-new.card-text #{item.price} $
+                            .inner-price-old.card-text 100$
+                            //- .inner-status.card-text #{item.description}
                             .inner-add-cart.text-center
-                                button.btn.btn-success.btn-add Thêm vào giỏ
+                                button.btn.btn-primary.btn-add Thêm vào giỏ
                     
