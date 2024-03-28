@@ -10,6 +10,8 @@ const productSchema = new  mongoose.Schema({
     brand:String,
     category:String,
     thumbnail:String,
+    status:String,
+    deleted:Boolean
 });
 
 const Product= mongoose.model("Product",productSchema,"products");
