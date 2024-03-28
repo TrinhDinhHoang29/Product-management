@@ -5,12 +5,9 @@ block main
         .card.my-3
             h5.card-header Bộ lọc và tìm kiếm
             .card-body 
-                a(href="/admin/products") 
-                    button(class="btn btn-sm mx-1 btn-outline-success active" status-button="") Tất cả
-                a(href="/admin/products?status=active") 
-                    button(class="btn btn-sm mx-1 btn-outline-success" status-button="active") Hoạt động
-                a(href="/admin/products?status=unactive") 
-                    utton(class="btn btn-sm mx-1 btn-outline-success" status-button="unactive") Dừng hoạt động
+                each item in filterStatus 
+                    a(href=`/admin/products?status=${item.status}`) 
+                        button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
 
         .card.mb-3
             h5.card-header Danh sách sản phẩm

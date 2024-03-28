@@ -4,8 +4,7 @@
 // if(buttonStatus.length>0){
 //     buttonStatus.forEach(element=>{
 //         element.addEventListener("click",()=>{
-//             let status = element.getAttribute("status-button");
-//             console.log(status);
+//             element.setAttribute("class","active");
 //         }
 //         );
 //     })
