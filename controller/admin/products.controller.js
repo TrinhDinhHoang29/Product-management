@@ -30,7 +30,9 @@ module.exports.products =async (req,res)=>{
                     element.class="active";
             })
         }
+    if(req.query.keyword){
+        find.title = req.query.keyword;
+    }
     let Products=await productsModel.find(find);
-    console.log(Products);
     res.render("admin/pages/products/index",{products:Products,filterStatus:filterStatus});
 }

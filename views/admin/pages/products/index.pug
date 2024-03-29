@@ -4,11 +4,17 @@ block main
     .col-9.px-3
         .card.my-3
             h5.card-header Bộ lọc và tìm kiếm
-            .card-body 
-                each item in filterStatus 
-                    a(href=`/admin/products?status=${item.status}`) 
-                        button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
-
+            .card-body.row 
+                .col-6 
+                    each item in filterStatus 
+                        a(href=`/admin/products?status=${item.status}`) 
+                            button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
+                .col-6 
+                    form(action="" id="form-search")
+                        .input-group 
+                            input(type="text" placeholder="Nhập từ khóa" name="keyword" class="form-control")
+                            .input-group-append
+                                button(class="btn btn-success" type="submit") Tìm kiếm 
         .card.mb-3
             h5.card-header Danh sách sản phẩm
             .card-body
