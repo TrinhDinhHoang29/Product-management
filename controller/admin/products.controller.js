@@ -19,7 +19,6 @@ module.exports.products =async (req,res)=>{
         }
     ]
 
-
     let find = {deleted:true};
     if(req.query.status)
         {
@@ -30,9 +29,11 @@ module.exports.products =async (req,res)=>{
                     element.class="active";
             })
         }
+        let keyword = req.query.keyword;
     if(req.query.keyword){
-        find.title = req.query.keyword;
+        const regex = new RegExp(keyword,"i");/// i để k phân biệt chữ hoa chữ thường
+        find.title = regex;
     }
     let Products=await productsModel.find(find);
-    res.render("admin/pages/products/index",{products:Products,filterStatus:filterStatus});
+    res.render("admin/pages/products/index",{products:Products,filterStatus:filterStatus,keyword:keyword});
 }
