@@ -1,5 +1,5 @@
 extends ../../layouts/default 
-
+include ../../mixins/search
 block main
     .col-9.px-3
         .card.my-3
@@ -10,11 +10,7 @@ block main
                         a(href=`/admin/products?status=${item.status}`) 
                             button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
                 .col-6 
-                    form(action="" id="form-search")
-                        .input-group 
-                            input(type="text" placeholder="Nhập từ khóa" name="keyword" class="form-control" value=keyword)
-                            .input-group-append
-                                button(class="btn btn-success" type="submit") Tìm kiếm 
+                   +search(keyword)
         .card.mb-3
             h5.card-header Danh sách sản phẩm
             .card-body
@@ -45,4 +41,28 @@ block main
                                 td 
                                     button(class="btn btn-warning mx-1") Sửa
                                     button(class="btn btn-danger mx-1") Xóa
+
+        nav(aria-label="Page navigation example")
+            ul(class="pagination")
+                - if(objPagination.currentPage>1)
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objPagination.currentPage-1 ) Trang trước
+                
+                - for(let i =objPagination.pageStart;i<=objPagination.pageEnd;i++)
+                    li(class="page-item")
+                        button(class=`page-link ${objPagination.currentPage==i?"active":""}`  button-pagination=i) #{i}
+                //- - else if (objPagination.currentPage+2<objPagination.totalPage)
+                //-     - for(let i =objPagination.currentPage;i<=objPagination.currentPage+2;i++)
+                //-         li(class="page-item")
+                //-             button(class=`page-link ${objPagination.currentPage==i?"active":""}`  button-pagination=i) #{i}
+                //- li(class="page-item")
+                //-     button(class="page-link" href="#") 2
+                //- li(class="page-item")
+                //-     button(class="page-link" href="#") 3
+
+                - if(objPagination.currentPage<objPagination.totalPage)
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objPagination.currentPage+1) Tiếp theo
+        
+   
                     
