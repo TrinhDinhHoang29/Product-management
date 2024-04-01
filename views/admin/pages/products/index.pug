@@ -33,10 +33,10 @@ block main
                                 td #{item.price}$
                                 td 
                                     - if(item.status == "active")
-                                        a(href="")
+                                        a(button-change-status id-change=item.id status-change=item.status href="javascript:")
                                             span.badge.bg-success Đang hoạt động 
                                     - else
-                                        a(href="")
+                                        a(button-change-status id-change=item.id status-change=item.status href="javascript:")
                                             span.badge.bg-danger Dừng hoạt động
                                 td 
                                     button(class="btn btn-warning mx-1") Sửa
@@ -63,6 +63,7 @@ block main
                 - if(objPagination.currentPage<objPagination.totalPage)
                     li(class="page-item")
                         button(class="page-link" button-pagination=objPagination.currentPage+1) Tiếp theo
-        
+    form(action="" id ="formChangeStatus" method="POST" data-path="/admin/products/change-status") 
+    script(src="/admin/js/products.js")     
    
                     

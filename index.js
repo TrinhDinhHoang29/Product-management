@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express= require('express');
+var methodOverride = require('method-override')
 const app = express();
+app.use(methodOverride('_method'))
 const routesClient= require("./routes/client/index.route");
 const routesAdmin= require("./routes/admin/index.router");
 

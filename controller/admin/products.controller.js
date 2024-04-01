@@ -13,6 +13,9 @@ module.exports.products =async (req,res)=>{
     if(objectSearch.regex){
         find.title = objectSearch.regex;
     }
+
+
+
     // pagination start -----------------------------------
     let objPagination = {
         limiteItem:4,
@@ -24,5 +27,16 @@ module.exports.products =async (req,res)=>{
 
     // pagination end ---------------------------------------
     let Products=await productsModel.find(find).limit(objPagination.limiteItem).skip(objPagination.skipItem);
-    res.render("admin/pages/products/index",{products:Products,filterStatus:filterStatus,keyword:objectSearch.keyword,objPagination:resultPagination});
+    res.render("admin/pages/products/index",{products:Products,
+                                            filterStatus:filterStatus,
+                                            keyword:objectSearch.keyword,
+                                            objPagination:resultPagination
+                                        });
+}
+
+module.exports.changeStatus = async (req,res)=>{
+    const id = req.params.id;
+    const status = req.params.status;
+    await productsModel.updateOne({_id:id},{status:status});
+    res.redirect("back");
 }
