@@ -2,7 +2,7 @@ extends ../../layouts/default
 include ../../mixins/search
 include ../../mixins/change-multi
 block main
-    .col-9.px-3
+    .col-9
         .card.my-3
             h5.card-header Bộ lọc và tìm kiếm
             .card-body.row 
@@ -70,7 +70,8 @@ block main
                     li(class="page-item")
                         button(class="page-link" button-pagination=objPagination.currentPage+1) Tiếp theo
     form(action="" id ="formChangeStatus" method="POST" data-path="/admin/products/change-status") 
-    script(src="/admin/js/products.js")
     form(action="" method="POST" data-path="/admin/products/deleteItem" id="form-deleteItem")  
+    script(src="/admin/js/products.js")
+
    
                     

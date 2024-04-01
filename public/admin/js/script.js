@@ -113,3 +113,62 @@ if(formChangeMulti){
 
 // form change status multi end ------------------------
 
+
+//checkbox restore start ----------------------------------
+const restoreAll = document.querySelector("[restoreAll]");
+if(restoreAll){
+    const restoreIds = restoreAll.querySelector("input[name='restoreIds']");
+    const restoreId = restoreAll.querySelectorAll("input[name='restoreId']");
+    restoreIds.addEventListener("click",()=>{
+        if(restoreIds.checked==true){
+            restoreId.forEach(item=>{
+                item.checked=true;
+            })
+        }
+        else{
+            restoreId.forEach(item=>{
+                item.checked=false;
+            })
+        }
+    });
+    restoreId.forEach(item=>{
+       item.addEventListener("click",()=>{
+            const countRestoresChecked = restoreAll.querySelectorAll("input[name='restoreId']:checked").length;
+            if(restoreId.length==countRestoresChecked){
+                restoreIds.checked=true;
+            }
+            else
+                restoreIds.checked=false;
+        })
+    })
+}
+//checkbox restore end ------------------------------------
+
+
+
+//restore multi start ------------------------------------
+
+const formRestoreMulti = document.querySelector("[form-restore-multi]")
+if(formRestoreMulti){
+    const restoreAll = document.querySelector("[restoreAll]");
+        formRestoreMulti.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            const productRestoresChecked = restoreAll.querySelectorAll("input[name='restoreId']:checked");
+            if(productRestoresChecked.length>0){
+            const ids = [];
+            const inputRestore= formRestoreMulti.querySelector("input[name='allIdRestore']");
+            productRestoresChecked.forEach(item=>{
+                ids.push([item.value]);
+            })
+            inputRestore.value = ids.join(", ");
+            formRestoreMulti.submit();
+            }
+        })
+    
+
+}
+
+//restore multi end -------------------------------------
+
+
+

@@ -1,0 +1,45 @@
+extends ../../layouts/default 
+
+block main 
+    .col-9 
+        form(action="/admin/products/restoreMulti?_method=PATCH" method="POST" class="container my-3"  form-restore-multi)
+            .d-flex.align-items-start
+                .form-group
+                    select(name="type" class="form-control")
+                        option(value="true") Khôi phục
+                .form-group 
+                    input(type="text" name="allIdRestore" value="" class="form-control d-none")
+                button(class="btn btn-primary" type="submit" ) Áp dụng
+        table(class="table table-striped my-3"  restoreAll)
+            thead(class="table-dark")
+                tr 
+                    th STT
+                    th Hình ảnh
+                    th Tiêu đề
+                    th Gía
+                    th Trạng thái 
+                    th Hành động
+                        input(type="checkbox" name="restoreIds")
+
+            tbody 
+                each item,index in productsDeleted 
+                    tr 
+                        td #{index}
+                        td 
+                            img(src=item.thumbnail, alt="",width="100px")
+                        td #{item.title}
+                        td #{item.price} $
+                        td 
+                            - if(item.status == "active")
+                                a(button-change-status id-change=item.id status-change=item.status href="javascript:")
+                                    span.badge.bg-success Đang hoạt động 
+                            - else
+                                a(button-change-status id-change=item.id status-change=item.status href="javascript:")
+                                    span.badge.bg-danger Dừng hoạt động
+                        td 
+                            button(class="btn btn-warning mx-1" id-restore=item.id button-restore-product) Khôi phục
+                            input(type="checkbox" name="restoreId" value=item.id)
+    form(action="", method="post",id="formRestore",data-path="/admin/products/restores") 
+    script(src="/admin/js/products.js")
+
+

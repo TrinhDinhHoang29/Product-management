@@ -34,6 +34,21 @@ if(deleteItems.length>0){
         })
     })
 }
-
-
 //delete Item end ----------------------------
+
+//Restore products start ----------------------
+const buttonProductsRestore = document.querySelectorAll("[button-restore-product]")
+if(buttonProductsRestore.length>0){
+    buttonProductsRestore.forEach(item=>{
+        item.addEventListener("click",()=>{
+            const idProductRestore = item.getAttribute("id-restore");
+            const formRestore = document.querySelector("#formRestore");
+            const pathRestore = formRestore.getAttribute("data-path");
+            const action = pathRestore+"/"+ idProductRestore;
+            formRestore.action = action+"?_method=PATCH";
+            formRestore.submit();
+        })
+    })
+}
+
+//Restore products end ------------------------

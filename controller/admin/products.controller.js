@@ -55,6 +55,20 @@ module.exports.changeMulti = async (req,res)=>{
 }
 module.exports.deleteItem = async (req,res)=>{
     const idItem = req.params.id;
-    await productsModel.updateOne({_id:idItem},{deleted:false});
+    await productsModel.updateOne({_id:idItem},{deleted:false,dateDeleted: new Date()});
+    res.redirect("back");
+}
+module.exports.restores = async(req,res)=>{
+    const productsDeleted = await productsModel.find({deleted:false});
+    res.render("admin/pages/products/restore",{productsDeleted:productsDeleted});
+}
+module.exports.restoresId = async(req,res)=>{
+    const idRestore = req.params.id;
+    await productsModel.updateOne({_id:idRestore},{deleted:true});
+    res.redirect("back");
+}
+module.exports.restoreMulti = async(req,res)=>{
+    const ids = req.body.allIdRestore.split(", ");
+    await productsModel.updateMany({_id:ids},{deleted:true});
     res.redirect("back");
 }
