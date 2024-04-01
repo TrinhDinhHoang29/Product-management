@@ -15,3 +15,25 @@ if(changeStatus.length>0){
     })
 }
 // change-status end 
+
+
+//delete Item start ----------------------------
+const deleteItems= document.querySelectorAll("[button-deleteItem]");
+if(deleteItems.length>0){
+    deleteItems.forEach(item=>{
+        item.addEventListener("click",()=>{
+            if(window.confirm("Bạn chất chắn muốn xóa")){
+            const id = item.getAttribute("id-deleteItem");
+            const formDeleteItem = document.querySelector("#form-deleteItem");
+            const pathDelete = formDeleteItem.getAttribute("data-path");
+            const action = pathDelete+"/"+id;
+            formDeleteItem.action = action+"?_method=DELETE";
+            formDeleteItem.submit();  
+            }
+            
+        })
+    })
+}
+
+
+//delete Item end ----------------------------

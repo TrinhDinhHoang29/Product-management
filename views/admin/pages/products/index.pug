@@ -46,7 +46,7 @@ block main
                                             span.badge.bg-danger Dừng hoạt động
                                 td 
                                     button(class="btn btn-warning mx-1") Sửa
-                                    button(class="btn btn-danger mx-1") Xóa
+                                    button(class="btn btn-danger mx-1" id-deleteItem=item.id button-deleteItem) Xóa
 
         nav(aria-label="Page navigation example")
             ul(class="pagination")
@@ -70,6 +70,7 @@ block main
                     li(class="page-item")
                         button(class="page-link" button-pagination=objPagination.currentPage+1) Tiếp theo
     form(action="" id ="formChangeStatus" method="POST" data-path="/admin/products/change-status") 
-    script(src="/admin/js/products.js")     
+    script(src="/admin/js/products.js")
+    form(action="" method="POST" data-path="/admin/products/deleteItem" id="form-deleteItem")  
    
                     
