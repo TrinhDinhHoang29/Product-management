@@ -1,5 +1,6 @@
 extends ../../layouts/default 
 include ../../mixins/search
+include ../../mixins/change-multi
 block main
     .col-9.px-3
         .card.my-3
@@ -14,9 +15,12 @@ block main
         .card.mb-3
             h5.card-header Danh sách sản phẩm
             .card-body
-                table.table.table-striped.my-3.text-center 
+                +changeMulti("/admin/products/change-multi?_method=PATCH")
+                table(class=" table table-striped my-3 text-center" checkbox-multi) 
                     thead.table-dark 
                         tr 
+                            th 
+                                input(type="checkbox", name="checkAll")
                             th STT
                             th Hình ảnh
                             th Tiêu đề
@@ -26,6 +30,8 @@ block main
                     tbody 
                         each item,index in products 
                             tr 
+                                td 
+                                    input(type="checkbox" name="id" value=item.id)
                                 td #{index+1}
                                 td
                                     img(src=item.thumbnail, alt="",width="100px")

@@ -54,3 +54,62 @@ if(buttonsPagination){
 
 
 //pagination end --------------------
+
+
+
+// checkbox-multi start -----------------------------------
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if(checkboxMulti){
+    const checkboxAll = checkboxMulti.querySelector("input[name='checkAll']");
+    const checkboxIds = checkboxMulti.querySelectorAll("input[name='id']");
+    checkboxAll.addEventListener("click",()=>{
+        if(checkboxAll.checked)
+            {
+                checkboxIds.forEach(item=>{
+                    item.checked=true;
+                })
+            }
+        else
+            {
+                checkboxIds.forEach(item=>{
+                    item.checked=false;
+                })
+            }
+    });
+    checkboxIds.forEach(item=>{
+        item.addEventListener("click",()=>{
+            const countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
+            if(countChecked==checkboxIds.length)
+                checkboxAll.checked=true;
+            else
+                checkboxAll.checked=false;
+        })
+    });
+    
+}
+// checkbox-multi end -----------------------------------
+
+
+// form change status multi start ------------------------
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti){
+        formChangeMulti.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            const checkboxMulti = document.querySelector("[checkbox-multi]");
+            const checkedboxIds = checkboxMulti.querySelectorAll("input[name='id']:checked");
+            if(checkedboxIds.length>0){
+                const ids=[];
+                checkedboxIds.forEach(item=>ids.push(item.value));
+                if(ids.length>0){
+                    const inputIds = formChangeMulti.querySelector("input[name='ids']");
+                    inputIds.value = ids.join(", ");
+                    formChangeMulti.submit();
+                }
+            }
+        })
+    
+
+}
+
+
+// form change status multi end ------------------------
