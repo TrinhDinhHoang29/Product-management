@@ -17,7 +17,7 @@ block main
                     th Hình ảnh
                     th Tiêu đề
                     th Gía
-                    th Trạng thái 
+                    th Ngày xóa 
                     th Hành động
                         input(type="checkbox" name="restoreIds")
 
@@ -29,13 +29,7 @@ block main
                             img(src=item.thumbnail, alt="",width="100px")
                         td #{item.title}
                         td #{item.price} $
-                        td 
-                            - if(item.status == "active")
-                                a(button-change-status id-change=item.id status-change=item.status href="javascript:")
-                                    span.badge.bg-success Đang hoạt động 
-                            - else
-                                a(button-change-status id-change=item.id status-change=item.status href="javascript:")
-                                    span.badge.bg-danger Dừng hoạt động
+                        td #{item.dateDeleted}
                         td 
                             button(class="btn btn-warning mx-1" id-restore=item.id button-restore-product) Khôi phục
                             input(type="checkbox" name="restoreId" value=item.id)

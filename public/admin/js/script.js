@@ -102,8 +102,16 @@ if(formChangeMulti){
                 checkedboxIds.forEach(item=>ids.push(item.value));
                 if(ids.length>0){
                     const inputIds = formChangeMulti.querySelector("input[name='ids']");
+                    const selectedDeleteAll = e.target.elements.type.value;
                     inputIds.value = ids.join(", ");
+                    if(selectedDeleteAll=="delete-all"){
+                        const resultConfirm = window.confirm("bạn có muốn xóa không");
+                        if(resultConfirm){
+                            formChangeMulti.submit();
+                        }
+                    }else{
                     formChangeMulti.submit();
+                    }
                 }
             }
         })
@@ -170,5 +178,16 @@ if(formRestoreMulti){
 
 //restore multi end -------------------------------------
 
-
-
+// show alert -----------------------
+const showAlert = document.querySelector("[show-alert]");
+if(showAlert){
+    const dataTime =parseInt( showAlert.getAttribute("data-time"));
+    setTimeout(()=>{
+        showAlert.classList.add("alert-hidden");
+   },dataTime);
+   setTimeout(()=>{
+    document.querySelector(".messages-success").remove();
+},dataTime+2000);
+   
+}
+//end alert--------------------------

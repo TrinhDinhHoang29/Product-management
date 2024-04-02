@@ -1,0 +1,6 @@
+mixin messages-success(dataTime)
+    - if(messages.success)
+            .messages-success.info.my-3
+                div(class="alert alert-success" show-alert data-time=dataTime)
+                    i(class="fa-solid fa-check") 
+                        #{messages.success}

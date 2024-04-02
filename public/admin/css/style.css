@@ -14,3 +14,33 @@
     background-color: black;
     color: white;
 }
+.messages-success{
+    width: 300px;
+    position: fixed;
+    z-index: 1000;
+    right: 30px;
+    opacity: 1;
+    animation: alert-opacity 10s forwards;
+}
+@keyframes alert-opacity{
+    form {
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+}
+@keyframes alert-hidden{
+    from {
+        right: 30px;
+    }
+    to{
+        right: -200%;
+    }
+
+}
+.alert-hidden{
+    animation-name: alert-hidden;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}

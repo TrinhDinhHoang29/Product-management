@@ -1,8 +1,11 @@
 extends ../../layouts/default 
 include ../../mixins/search
 include ../../mixins/change-multi
+include ../../mixins/messages-success
+
 block main
     .col-9
+        +messages-success("5000")
         .card.my-3
             h5.card-header Bộ lọc và tìm kiếm
             .card-body.row 

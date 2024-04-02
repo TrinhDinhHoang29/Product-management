@@ -38,18 +38,28 @@ module.exports.changeStatus = async (req,res)=>{
     const id = req.params.id;
     const status = req.params.status;
     await productsModel.updateOne({_id:id},{status:status});
+    req.flash("success","Đã update thành công");
     res.redirect("back");
 }
 module.exports.changeMulti = async (req,res)=>{
     const ids = req.body.ids.split(", ");
     const type = req.body.type;
-  //  console.log(type);
+    
+     console.log(type);
     switch (type){
         case "active":
-            await productsModel.updateMany({_id:ids},{status:"active"});break;
+            await productsModel.updateMany({_id:ids},{status:"active"});
+            req.flash("success","Đã update thành công"+ids.length+"sản phẩm");
+            break;
         case "unactive":
-            await productsModel.updateMany({_id:ids},{status:"unactive"});break;
-    
+            await productsModel.updateMany({_id:ids},{status:"unactive"});
+            req.flash("success","Đã update thành công"+ids.length+"sản phẩm");
+            break;
+        case "delete-all":
+            await productsModel.updateMany({_id:ids},{deleted:false});
+            req.flash("success","Đã xóa thành công"+ids.length+"sản phẩm");
+
+            break;
     }
    res.redirect("back");
 }
@@ -72,3 +82,4 @@ module.exports.restoreMulti = async(req,res)=>{
     await productsModel.updateMany({_id:ids},{deleted:true});
     res.redirect("back");
 }
+
