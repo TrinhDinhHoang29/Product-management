@@ -82,4 +82,17 @@ module.exports.restoreMulti = async(req,res)=>{
     await productsModel.updateMany({_id:ids},{deleted:true});
     res.redirect("back");
 }
-
+module.exports.create =async (req,res)=>{
+    res.render("admin/pages/products/create");
+}
+module.exports.createPost = async(req,res)=>{
+    req.body.price = parseFloat(req.body.price);
+    req.body.discountPercentage = parseFloat(req.body.discountPercentage);
+    req.body.rating = parseFloat(req.body.rating);
+    req.body.stock = parseFloat(req.body.stock);
+    req.body.thumbnail =`/uploads/${req.file.filename}`;
+    const product= new productsModel(req.body);
+    await product.save();
+    req.flash("success","Tạo sản phẩm thành công");
+    res.redirect("/admin/products"); 
+}

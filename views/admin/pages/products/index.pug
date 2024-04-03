@@ -18,7 +18,11 @@ block main
         .card.mb-3
             h5.card-header Danh sách sản phẩm
             .card-body
-                +changeMulti("/admin/products/change-multi?_method=PATCH")
+                .row
+                    .col-8
+                        +changeMulti("/admin/products/change-multi?_method=PATCH")
+                    .col-4
+                        a(href="/admin/products/create" class="btn btn-outline-success") + Thêm sản phẩm
                 table(class=" table table-striped my-3 text-center" checkbox-multi) 
                     thead.table-dark 
                         tr 

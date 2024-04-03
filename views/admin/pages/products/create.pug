@@ -1,0 +1,46 @@
+extends ../../layouts/default
+
+block main
+    .col-9
+        .my-3.card 
+            .card-header
+                h1 Thêm mới sản phẩm
+            .card-body 
+                form(class="form-group" method="POST" action="/admin/products/create" enctype="multipart/form-data")
+                    .mb-3 
+                        label(class="form-label") Title
+                        input(type="text" name="title" class="form-control")
+                    .mb-3 
+                        label(class="form-label") Description
+                        textarea(name="description", cols="30", rows="5" class="form-control")
+                    .mb-3 
+                        label(class="form-label") price
+                        input(type="text" name="price" class="form-control" value="0")
+                    .mb-3 
+                        label(class="form-label") Discount
+                        input(type="text" name="discountPercentage" class="form-control" value="0")
+                    .mb-3 
+                        label(class="form-label") Rating
+                        input(type="text" class="form-control" name="rating" value="0")
+                    .mb-3 
+                        label(class="form-label") Stock
+                        input(type="text" class="form-control" name="stock" value="0")
+                    .mb-3 
+                        label(class="form-label") brand
+                        input(type="text" name="brand" class="form-control" value="")
+                    .mb-3 
+                        label(class="form-label") category
+                        input(type="text" class="form-control" name="category" value="")
+                    .mb-3 
+                        label(class="form-label d-block") thumbnail
+                        input(type="file" class="form-file" name="thumbnail" value="")
+                    .mb-3 
+                        label(class="form-label") status
+                        .row.mx-3
+                            label(for="" class="col-2 mr-3") Active                               
+                                input(type="radio" class="form-radio" name="status" value="active" checked) 
+                            label(for="" class="col-2 mr-3") Unactive   
+                                input(type="radio" class="form-radio col-2" name="status" value="unactive") 
+                    .mb-3.text-center 
+                        input(type="submit" class="btn btn-primary" value="Thêm sản phẩm")
+                        
