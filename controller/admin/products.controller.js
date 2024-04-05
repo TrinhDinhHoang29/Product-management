@@ -86,11 +86,6 @@ module.exports.create =async (req,res)=>{
     res.render("admin/pages/products/create");
 }
 module.exports.createPost = async(req,res)=>{
-    if(!req.body.title){
-        req.flash("error","Thêm thất bại!!");
-        res.redirect("back");
-        return;
-    }
     req.body.price = parseFloat(req.body.price);
     req.body.discountPercentage = parseFloat(req.body.discountPercentage);
     req.body.rating = parseFloat(req.body.rating);
@@ -100,4 +95,23 @@ module.exports.createPost = async(req,res)=>{
     await product.save();
     req.flash("success","Tạo sản phẩm thành công");
     res.redirect("/admin/products"); 
+}
+module.exports.edit=async(req,res)=>{
+    const find = {
+        _id:req.params.id,
+        deleted:true
+    }
+    const product = await productsModel.findOne(find);
+    res.render("admin/pages/products/edit",{product:product});
+}
+module.exports.editPatch=async(req,res)=>{
+    req.body.price = parseFloat(req.body.price);
+    req.body.discountPercentage = parseFloat(req.body.discountPercentage);
+    req.body.rating = parseFloat(req.body.rating);
+    req.body.stock = parseFloat(req.body.stock);
+    if(req.file)
+       req.body.thumbnail =`/uploads/${req.file.filename}`;
+    const product= await productsModel.updateOne({_id:req.params.id},req.body);
+    req.flash("success","Thêm sản phẩm thành công");
+    res.redirect("back");
 }

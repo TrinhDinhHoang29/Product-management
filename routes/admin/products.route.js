@@ -15,4 +15,6 @@ routes.patch("/restores/:id",productsController.restoresId);
 routes.patch("/restoreMulti",productsController.restoreMulti);
 routes.get("/create",productsController.create);
 routes.post("/create",upload.single('thumbnail'),validate.createPost,productsController.createPost)
+routes.get("/edit/:id",productsController.edit);
+routes.patch("/edit/:id",upload.single('thumbnail'),validate.createPost,productsController.editPatch);
 module.exports = routes;
