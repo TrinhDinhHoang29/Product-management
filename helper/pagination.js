@@ -3,7 +3,7 @@ module.exports = (objPagination,query)=>{
         objPagination.currentPage =parseInt(query.page);
     }
     objPagination.skipItem = (objPagination.currentPage-1)*objPagination.limiteItem;
-    objPagination.pageStart = Math.max(1,objPagination.currentPage-1);
-    objPagination.pageEnd = Math.min(objPagination.totalPage,objPagination.currentPage+1);
+    objPagination.pageStart = Math.max(1,objPagination.currentPage-2);
+    objPagination.pageEnd = Math.min(objPagination.totalPage,objPagination.currentPage+2);
     return objPagination;
 }

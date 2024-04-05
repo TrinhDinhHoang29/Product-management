@@ -31,9 +31,13 @@ block main
                     .mb-3 
                         label(class="form-label") category
                         input(type="text" class="form-control" name="category" value="")
-                    .mb-3 
+                    div(class="mb-3" upload-image) 
                         label(class="form-label d-block") thumbnail
-                        input(type="file" class="form-file" name="thumbnail" value="")
+                        input(type="file" accept="image/*" class="form-file d-block" name="thumbnail" value="" upload-image-input)
+                        div
+                            div(class = "" close-image-upload) x 
+                            img(src="#"  alt="" upload-image-preview width="200px" class="d-inline" max-height="200px")
+
                     .mb-3 
                         label(class="form-label") status
                         .row.mx-3
