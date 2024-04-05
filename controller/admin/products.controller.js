@@ -86,6 +86,11 @@ module.exports.create =async (req,res)=>{
     res.render("admin/pages/products/create");
 }
 module.exports.createPost = async(req,res)=>{
+    if(!req.body.title){
+        req.flash("error","Thêm thất bại!!");
+        res.redirect("back");
+        return;
+    }
     req.body.price = parseFloat(req.body.price);
     req.body.discountPercentage = parseFloat(req.body.discountPercentage);
     req.body.rating = parseFloat(req.body.rating);

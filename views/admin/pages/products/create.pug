@@ -1,7 +1,8 @@
 extends ../../layouts/default
-
+include ../../mixins/messages-success
 block main
     .col-9
+        +messages-error("5000")
         .my-3.card 
             .card-header
                 h1 Thêm mới sản phẩm
