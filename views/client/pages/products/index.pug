@@ -14,7 +14,8 @@ block main
                             a(href="")
                                 img(src=item.thumbnail, alt="")  
                         .inner-content.card-body 
-                            .inner-title.card-title DiorSauvageEDP
+                            .inner-title.card-title 
+                                a(href=`/products/detail/${item.slug}`) #{item.title}
                             .inner-price-new.card-text #{item.price} $
                             .inner-price-old.card-text 100$
                             //- .inner-status.card-text #{item.description}

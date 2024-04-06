@@ -17,4 +17,5 @@ routes.get("/create",productsController.create);
 routes.post("/create",upload.single('thumbnail'),validate.createPost,productsController.createPost)
 routes.get("/edit/:id",productsController.edit);
 routes.patch("/edit/:id",upload.single('thumbnail'),validate.createPost,productsController.editPatch);
+routes.get("/detail/:id",productsController.detail);
 module.exports = routes;

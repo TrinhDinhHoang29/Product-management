@@ -14,7 +14,8 @@ const productSchema = new  mongoose.Schema({
     status:String,
     slug:{
         type:String,
-        slug:"title"
+        slug:"title",
+        unique:true
     },
     deleted:{
         type:Boolean,

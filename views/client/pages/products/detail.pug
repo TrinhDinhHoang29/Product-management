@@ -1,0 +1,15 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Chi tiết sản phẩm")
+        .row 
+            div(class= "card text-center")
+                div(class="card-header")
+                    h2 #{product.title} 
+                div(class="card-body")
+                    div(class="card-image")
+                        img(src=product.thumbnail width="300px" height="300px" alt="")
+                    div(class="card-text") #{product.price} $

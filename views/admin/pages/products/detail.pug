@@ -1,0 +1,13 @@
+extends ../../layouts/default
+
+
+block main 
+    .col-9.container
+        div(class= "card text-center")
+            div(class="card-header")
+                h2 #{product.title} 
+            div(class="card-body")
+                div(class="card-image")
+                    img(src=product.thumbnail width="300px" height="300px" alt="")
+                div(class="card-text") #{product.price} $
+                

@@ -115,3 +115,11 @@ module.exports.editPatch=async(req,res)=>{
     req.flash("success","Thêm sản phẩm thành công");
     res.redirect("back");
 }
+module.exports.detail = async (req,res)=>{
+    const find = {
+        _id:req.params.id,
+        deleted:true
+    }
+    const product = await productsModel.findOne(find);
+    res.render(`admin/pages/products/detail`,{product:product});
+}
