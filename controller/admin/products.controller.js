@@ -33,7 +33,6 @@ module.exports.products =async (req,res)=>{
                                             objPagination:resultPagination
                                         });
 }
-
 module.exports.changeStatus = async (req,res)=>{
     const id = req.params.id;
     const status = req.params.status;
@@ -90,7 +89,6 @@ module.exports.createPost = async(req,res)=>{
     req.body.discountPercentage = parseFloat(req.body.discountPercentage);
     req.body.rating = parseFloat(req.body.rating);
     req.body.stock = parseFloat(req.body.stock);
-    req.body.thumbnail =`/uploads/${req.file.filename}`;
     const product= new productsModel(req.body);
     await product.save();
     req.flash("success","Tạo sản phẩm thành công");
