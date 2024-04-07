@@ -15,6 +15,16 @@ block main
                             button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
                 .col-6 
                    +search(keyword)
+        .card.my-3 
+            h5.card-header Sắp xếp 
+            .card-body.row 
+                .col-6 
+                    div(sort)
+                        select(name="sort" class = "form-control" sort-select)
+                            option(value="id-asc") Mặc định
+                            option(value="price-desc") Giảm dần 
+                            option(value="price-asc")  Tăng dần
+            
         .card.mb-3
             h5.card-header Danh sách sản phẩm
             .card-body

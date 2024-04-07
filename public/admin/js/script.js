@@ -223,3 +223,27 @@ if(closeImage){
 }
 
 //close img end ---------------------------
+
+
+//sort start -------------------------------------
+const sort = document.querySelector("[sort]");
+if(sort){
+    const sortSelect = document.querySelector("[sort-select]");
+    const url = new URL(window.location.href);
+    const urlKeySort = url.searchParams.get("keySort");
+    const urlValueSort = url.searchParams.get("valueSort");
+    if(urlKeySort&&urlValueSort){
+        sortSelect.value = urlKeySort+"-"+urlValueSort;
+    }
+    sortSelect.addEventListener("change",(e)=>{
+    const stringSort = e.target.value;
+    const [keySort,valueSort] = stringSort.split("-");
+    url.searchParams.set("keySort",keySort);
+    url.searchParams.set("valueSort",valueSort);
+    window.location.href = url.href;
+    })
+}
+//sort end -------------------------------------
+
+
+

@@ -13,7 +13,16 @@ module.exports.products =async (req,res)=>{
     if(objectSearch.regex){
         find.title = objectSearch.regex;
     }
+    // sort start --------------------------------------------
+    const sort = {};
+    if(req.query.keySort){
+        sort[req.query.keySort] = req.query.valueSort;
 
+    }else{
+        sort.id = "asc";
+    }
+
+    // sort end ----------------------------------------------
 
 
     // pagination start -----------------------------------
@@ -26,7 +35,7 @@ module.exports.products =async (req,res)=>{
     const resultPagination = paginationHelper(objPagination,req.query);
 
     // pagination end ---------------------------------------
-    let Products=await productsModel.find(find).limit(objPagination.limiteItem).skip(objPagination.skipItem);
+    let Products=await productsModel.find(find).limit(objPagination.limiteItem).skip(objPagination.skipItem).sort(sort);
     res.render("admin/pages/products/index",{products:Products,
                                             filterStatus:filterStatus,
                                             keyword:objectSearch.keyword,

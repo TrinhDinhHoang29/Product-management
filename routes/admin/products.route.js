@@ -2,7 +2,7 @@ const productsController = require("../../controller/admin/products.controller")
 const express = require("express");
 const multer  = require('multer');
 const validate = require("../../validate/product.validate");
-const upload = multer() // Đường dẫn file được lấy bên helper storegeMulter
+const upload = multer();
 const cloudinary = require("../../middlewares/admin/uploadCloud.middleware");
 const routes = express.Router();        
 routes.get("/",productsController.products);
