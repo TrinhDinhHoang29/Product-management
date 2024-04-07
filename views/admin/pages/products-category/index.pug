@@ -6,4 +6,75 @@ include ../../mixins/sort
 block main 
     .col-9 
         +messages-success("5000")
-        h1 Trang danh muc san pham
+        //- .card.my-3
+        //-     h5.card-header Bộ lọc và tìm kiếm
+        //-     .card-body.row 
+        //-         .col-6 
+        //-             each item in filterStatus 
+        //-                 a(href=`/admin/products?status=${item.status}`) 
+        //-                     button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
+        //-         .col-6 
+        //-            +search(keyword)
+        //- .card.my-3 
+        //-     +sort()
+            
+        .card.mb-3
+            h5.card-header Danh sách sản phẩm
+            .card-body
+                .row
+                    .col-8
+                        +changeMulti("/admin/products/change-multi?_method=PATCH")
+                    .col-4
+                        a(href="/admin/products/create" class="btn btn-outline-success") + Thêm sản phẩm
+                table(class=" table table-striped my-3 text-center" checkbox-multi) 
+                    thead.table-dark 
+                        tr 
+                            th 
+                                input(type="checkbox", name="checkAll")
+                            th STT
+                            th Hình ảnh
+                            th Tiêu đề
+                            th Id parent
+                            th Vị trí
+                            th Trạng thái 
+                            th Hành động
+                    tbody 
+                        each item,index in productsCategory 
+                            tr 
+                                td 
+                                    input(type="checkbox" name="id" value=item.id)
+                                td #{index+1}
+                                td
+                                    img(src=item.thumbnail, alt="",width="100px")
+                                td #{item.title}
+                                td #{item.parentId}
+                                td #{item.posision}
+                                td 
+                                    - if(item.status == "active")
+                                        a(button-change-status id-change=item.id status-change=item.status href="javascript:")
+                                            span.badge.bg-success Đang hoạt động 
+                                    - else
+                                        a(button-change-status id-change=item.id status-change=item.status href="javascript:")
+                                            span.badge.bg-danger Dừng hoạt động
+                                td 
+                                    button(class="btn btn-secondary mx-1") 
+                                        a(href=`/admin/products/detail/${item.id}`) Chi tiết 
+                                    button(class="btn btn-warning mx-1") 
+                                        a(href=`/admin/products/edit/${item.id}`) Sửa
+                                    button(class="btn btn-danger mx-1" id-deleteItem=item.id button-deleteItem) Xóa
+
+        //- nav(aria-label="Page navigation example")
+            ul(class="pagination")
+                - if(objPagination.currentPage>1)
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objPagination.currentPage-1 ) Trang trước
+                
+                - for(let i =objPagination.pageStart;i<=objPagination.pageEnd;i++)
+                    li(class="page-item")
+                        button(class=`page-link ${objPagination.currentPage==i?"active":""}`  button-pagination=i) #{i}
+                - if(objPagination.currentPage<objPagination.totalPage)
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objPagination.currentPage+1) Tiếp theo
+    form(action="" id ="formChangeStatus" method="POST" data-path="/admin/products-Category/change-status") 
+    form(action="" method="POST" data-path="/admin/products/deleteItem" id="form-deleteItem")  
+    script(src="/admin/js/products.js")

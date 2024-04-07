@@ -71,15 +71,6 @@ block main
                 - for(let i =objPagination.pageStart;i<=objPagination.pageEnd;i++)
                     li(class="page-item")
                         button(class=`page-link ${objPagination.currentPage==i?"active":""}`  button-pagination=i) #{i}
-                //- - else if (objPagination.currentPage+2<objPagination.totalPage)
-                //-     - for(let i =objPagination.currentPage;i<=objPagination.currentPage+2;i++)
-                //-         li(class="page-item")
-                //-             button(class=`page-link ${objPagination.currentPage==i?"active":""}`  button-pagination=i) #{i}
-                //- li(class="page-item")
-                //-     button(class="page-link" href="#") 2
-                //- li(class="page-item")
-                //-     button(class="page-link" href="#") 3
-
                 - if(objPagination.currentPage<objPagination.totalPage)
                     li(class="page-item")
                         button(class="page-link" button-pagination=objPagination.currentPage+1) Tiếp theo

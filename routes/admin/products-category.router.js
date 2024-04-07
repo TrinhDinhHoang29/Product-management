@@ -9,7 +9,7 @@ const cloudinary = require("../../middlewares/admin/uploadCloud.middleware");
 router.get("/",productCategoryController.index);
 router.get("/create",productCategoryController.create);
 router.post("/create",upload.single("thumbnail"),cloudinary.uploadCloud,validate.createPost,productCategoryController.createPost);
-
+router.patch("/change-status/:statusChange/:idChange",productCategoryController.indexPatch);
 
 module.exports = router;
 
