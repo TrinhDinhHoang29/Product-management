@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express= require('express');
+const path = require('path');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -24,6 +25,8 @@ app.set("views",`${__dirname}/views`);
 app.set("view engine","pug");
 app.use(express.static(`${__dirname}/public`));
 app.set(express.urlencoded());
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 
 routesClient(app);
 routesAdmin(app);
