@@ -1,14 +1,20 @@
 //button status start
 
-// const buttonStatus = document.querySelectorAll("[status-button]");
-// if(buttonStatus.length>0){
-//     buttonStatus.forEach(element=>{
-//         element.addEventListener("click",()=>{
-//             element.setAttribute("class","active");
-//         }
-//         );
-//     })
-// }
+const filterStatus = document.querySelectorAll("[filter-status]");
+if(filterStatus){
+    filterStatus.forEach(element=>{
+        element.addEventListener("click",()=>{
+            let url = new URL(window.location.href);
+            const status = element.getAttribute("status");
+            if(status==""){
+                url.searchParams.delete("status");
+            }else{
+                url.searchParams.set("status",status);
+            }
+            window.location.href = url.href;
+        })
+    })
+}
 
 
 //button status end

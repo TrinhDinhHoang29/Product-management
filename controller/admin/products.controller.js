@@ -53,7 +53,6 @@ module.exports.changeMulti = async (req,res)=>{
     const ids = req.body.ids.split(", ");
     const type = req.body.type;
     
-     console.log(type);
     switch (type){
         case "active":
             await productsModel.updateMany({_id:ids},{status:"active"});

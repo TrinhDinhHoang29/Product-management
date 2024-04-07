@@ -6,26 +6,25 @@ include ../../mixins/sort
 block main 
     .col-9 
         +messages-success("5000")
-        //- .card.my-3
-        //-     h5.card-header Bộ lọc và tìm kiếm
-        //-     .card-body.row 
-        //-         .col-6 
-        //-             each item in filterStatus 
-        //-                 a(href=`/admin/products?status=${item.status}`) 
-        //-                     button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
-        //-         .col-6 
-        //-            +search(keyword)
-        //- .card.my-3 
-        //-     +sort()
+        .card.my-3
+            h5.card-header Bộ lọc và tìm kiếm
+            .card-body.row 
+                .col-6 
+                    each item in filterStatus 
+                        button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}` filter-status status=item.status ) #{item.name}
+                .col-6 
+                   +search(keyword)
+        .card.my-3 
+            +sort("id-asc","posision-desc","posision-asc")
             
         .card.mb-3
             h5.card-header Danh sách sản phẩm
             .card-body
                 .row
                     .col-8
-                        +changeMulti("/admin/products/change-multi?_method=PATCH")
+                        +changeMulti("/admin/products-Category/change-multi?_method=PATCH")
                     .col-4
-                        a(href="/admin/products/create" class="btn btn-outline-success") + Thêm sản phẩm
+                        a(href="/admin/products-Category/create" class="btn btn-outline-success") + Thêm sản phẩm
                 table(class=" table table-striped my-3 text-center" checkbox-multi) 
                     thead.table-dark 
                         tr 

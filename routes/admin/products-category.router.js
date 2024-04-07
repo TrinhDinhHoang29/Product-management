@@ -10,6 +10,7 @@ router.get("/",productCategoryController.index);
 router.get("/create",productCategoryController.create);
 router.post("/create",upload.single("thumbnail"),cloudinary.uploadCloud,validate.createPost,productCategoryController.createPost);
 router.patch("/change-status/:statusChange/:idChange",productCategoryController.indexPatch);
+router.patch("/change-multi",productCategoryController.changeMulti);
 
 module.exports = router;
 

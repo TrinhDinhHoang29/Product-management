@@ -1,9 +1,9 @@
-mixin sort()
+mixin sort(valueDefault,valueDesc,valueAsc)
     h5.card-header Sắp xếp 
             .card-body.row 
                 .col-6 
                     div(sort)
                         select(name="sort" class = "form-control" sort-select)
-                            option(value="id-asc") Mặc định
-                            option(value="price-desc") Giảm dần 
-                            option(value="price-asc")  Tăng dần
+                            option(value=valueDefault) Mặc định
+                            option(value=valueDesc) Giảm dần 
+                            option(value=valueAsc)  Tăng dần
