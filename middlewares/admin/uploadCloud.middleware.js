@@ -1,13 +1,11 @@
+
 //Thu vien upload start ------------------------
 const cloudinary = require('cloudinary').v2
 const streamifier = require('streamifier')
+const cloudConfig = require("../../config/cloudinary.config");
 //Thu vien upload end ------------------------
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET
-  });
+cloudConfig(cloudinary);
 
 module.exports.uploadCloud = (req, res, next)=>{
     if(req.file){
