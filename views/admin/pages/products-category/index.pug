@@ -1,4 +1,9 @@
 extends ../../layouts/default 
+include ../../mixins/search
+include ../../mixins/change-multi
+include ../../mixins/messages-success
+include ../../mixins/sort
 block main 
     .col-9 
+        +messages-success("5000")
         h1 Trang danh muc san pham
