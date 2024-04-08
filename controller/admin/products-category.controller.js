@@ -1,6 +1,8 @@
 const filterStatusHelper = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
+const treeCategory = require("../../helper/treeCategory");
+
 const productCategoryModel = require("../../models/products-category.model");
 module.exports.index = async (req,res)=>{
     let filterStatus = filterStatusHelper(req.query);//Lấy từ helper
@@ -35,8 +37,11 @@ module.exports.indexPatch = async(req,res)=>{
         res.redirect("back");
     }
 }
-module.exports.create = (req,res)=>{
-    res.render("admin/pages/products-category/create");
+module.exports.create =async (req,res)=>{
+    const find = {deleted: false};
+    const records = await productCategoryModel.find(find);
+    const recordsNew = treeCategory(records);
+    res.render("admin/pages/products-category/create",{records:recordsNew});
 }
 module.exports.createPost = async (req,res)=>{
     if(req.body.posision=="")
@@ -46,7 +51,6 @@ module.exports.createPost = async (req,res)=>{
     }else{
         req.body.posision = parseInt(req.body.posision);
     }
-    req.body.parentId = parseInt(req.body.parentId);
     const productCategory = new productCategoryModel(req.body);
     await productCategory.save();
     req.flash("success","Thêm danh mục sản phẩm thành công");

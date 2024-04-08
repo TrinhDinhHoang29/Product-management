@@ -5,7 +5,7 @@ mongoose.plugin(slug);
 
 const productsCategorySchema = new mongoose.Schema({
     title:String,
-    parentId:Number, 
+    parentId:String, 
     desciption:String, 
     status:String, 
     thumbnail:String, 
