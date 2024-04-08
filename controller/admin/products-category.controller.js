@@ -76,3 +76,22 @@ module.exports.changeMulti = async(req,res)=>{
         res.redirect("back");
     }
 }
+module.exports.edit = async(req,res)=>{
+    const id = req.params.id;
+    const find = {deleted: false};
+    const records = await productCategoryModel.find(find);
+    const recordsNew = treeCategory(records);
+    const productCategory = await productCategoryModel.findOne({deleted:false,_id:id});
+    res.render("admin/pages/products-category/edit",{records:recordsNew,productCategory:productCategory});
+}
+module.exports.editPatch = async(req,res)=>{
+    try{
+        const id = req.params.id;
+        await productCategoryModel.updateOne({_id:id},req.body);
+        req.flash("success","Update thanh cong !!!");
+        res.redirect("back");
+    }catch(err){
+        req.flash("error","Update khong thanh cong !!!");
+        res.redirect("back");
+    }
+}

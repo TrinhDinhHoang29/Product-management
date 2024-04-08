@@ -2,6 +2,8 @@ const productsModel = require("../../models/products.model");
 const filterStatusHelper = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
+const treeCategory = require("../../helper/treeCategory");
+const productCategoryModel = require("../../models/products-category.model");
 module.exports.products =async (req,res)=>{
     
     let filterStatus = filterStatusHelper(req.query);//Lấy từ helper
@@ -90,7 +92,10 @@ module.exports.restoreMulti = async(req,res)=>{
     res.redirect("back");
 }
 module.exports.create =async (req,res)=>{
-    res.render("admin/pages/products/create");
+    const find = {deleted: false};
+    const records = await productCategoryModel.find(find);
+    const recordsNew = treeCategory(records);
+    res.render("admin/pages/products/create",{records:recordsNew});
 }
 module.exports.createPost = async(req,res)=>{
     req.body.price = parseFloat(req.body.price);
@@ -107,8 +112,10 @@ module.exports.edit=async(req,res)=>{
         _id:req.params.id,
         deleted:true
     }
+    const records = await productCategoryModel.find({deleted:false});
+    const recordsNew = treeCategory(records);
     const product = await productsModel.findOne(find);
-    res.render("admin/pages/products/edit",{product:product});
+    res.render("admin/pages/products/edit",{records:recordsNew,product:product});
 }
 module.exports.editPatch=async(req,res)=>{
     req.body.price = parseFloat(req.body.price);

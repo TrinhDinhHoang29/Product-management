@@ -9,7 +9,7 @@ const productSchema = new  mongoose.Schema({
     rating:Number,
     stock:Number,
     brand:String,
-    category:String,
+    productCategoryId:String,
     thumbnail:String,
     status:String,
     slug:{
