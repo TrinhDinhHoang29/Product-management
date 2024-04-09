@@ -8,5 +8,7 @@ router.get("/create",rolesController.create);
 router.post("/create",rolesController.createPost);
 router.get("/edit/:id",rolesController.edit);
 router.patch("/edit/:id",rolesController.editPatch);
+router.get("/detail/:id",rolesController.detail);
+router.delete("/deleteItem/:id",rolesController.deleted);
 
 module.exports = router;

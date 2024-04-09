@@ -35,3 +35,25 @@ module.exports.editPatch = async(req,res)=>{
         res.redirect("back");
     }
 }
+module.exports.detail = async (req,res)=>{
+    const id = req.params.id;
+    if(id){
+        const records = await rolesModels.findOne({_id:id});
+        res.render("admin/pages/roles/detail",{records:records});
+    }else{
+        res.redirect("back");
+    }
+}
+module.exports.deleted = async (req,res)=>{
+    const id = req.params.id;
+    try {
+        if(id){
+            await rolesModels.updateOne({_id:id},{deleted:true});
+            req.flash("success","Xóa thành công !!!");
+            res.redirect("back");
+        }
+    } catch (error) {
+        req.flash("error","Xóa không thành công !!!");
+        res.redirect("back");
+    }
+}

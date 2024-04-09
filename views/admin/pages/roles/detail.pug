@@ -1,0 +1,10 @@
+extends ../../layouts/default
+
+
+block main 
+    .col-9.container
+        div(class= "card text-center")
+            div(class="card-header")
+                h2 #{records.title} 
+            div(class="card-body")
+                div(class="card-text") !{records.description}

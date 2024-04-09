@@ -29,7 +29,9 @@ block main
                                 td #{item.description}
                                 td 
                                     button(class="btn btn-secondary mx-1") 
-                                        a(href=`/admin/products/detail/${item.id}`) Chi tiết 
+                                        a(href=`/admin/roles/detail/${item.id}`) Chi tiết 
                                     button(class="btn btn-warning mx-1") 
                                         a(href=`/admin/roles/edit/${item.id}`) Sửa
                                     button(class="btn btn-danger mx-1" id-deleteItem=item.id button-deleteItem) Xóa
+    form(action="" method="POST" data-path="/admin/roles/deleteItem" id="form-deleteItem")  
+    script(src="/admin/js/products.js")
