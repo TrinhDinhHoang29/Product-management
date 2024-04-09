@@ -10,5 +10,7 @@ router.get("/edit/:id",rolesController.edit);
 router.patch("/edit/:id",rolesController.editPatch);
 router.get("/detail/:id",rolesController.detail);
 router.delete("/deleteItem/:id",rolesController.deleted);
+router.get("/permission",rolesController.permission);
+router.patch("/permission",rolesController.permissionPatch);
 
 module.exports = router;

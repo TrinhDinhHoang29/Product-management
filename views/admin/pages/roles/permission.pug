@@ -1,0 +1,44 @@
+extends ../../layouts/default 
+include ../../mixins/search
+include ../../mixins/change-multi
+include ../../mixins/messages-success
+include ../../mixins/sort
+block main 
+    .col-9 
+        +messages-success("5000")
+        div(data-records=records class="d-none") 
+        .row.my-3 
+            .col-8 
+            .col-4 
+                button(class="btn btn-primary" btn-update-roles) Cập nhật
+        table.container.table.text-center 
+            thead.table-dark 
+                tr 
+                    th Các nhóm quyền 
+                    each record in records 
+                        th #{record.title}
+            tbody 
+                tr(row)
+                    td 
+                        b  Nhóm quyền 
+                    each record in records 
+                        td 
+                            input(type="text" value=record.id roles-id class="d-none")
+                tr(row)
+                    td Thêm quyền 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="roles-add")
+                tr(row )
+                    td Xóa quyền 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="roles-delete")
+                tr(row )
+                    td Sửa quyền 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="roles-edit")
+    form(action="/admin/roles/permission?_method=PATCH" method="post" frm-permission)
+        input(type="text" class="d-none" name="permission")               
+    script(src="/admin/js/roles.js") 

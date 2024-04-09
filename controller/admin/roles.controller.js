@@ -57,3 +57,15 @@ module.exports.deleted = async (req,res)=>{
         res.redirect("back");
     }
 }
+module.exports.permission = async (req,res)=>{
+    const records = await rolesModels.find({deleted:false});
+    res.render("admin/pages/roles/permission",{records:records});
+}
+module.exports.permissionPatch = async(req,res)=>{
+    const permissions = JSON.parse(req.body.permission);
+    for (const permission of permissions) {
+        await rolesModels.updateOne({_id:permission.id},{permissions:permission.permission});
+    }
+    req.flash("success","Update thành công !!");
+    res.redirect("back");
+}
