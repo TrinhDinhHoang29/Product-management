@@ -1,0 +1,38 @@
+extends ../../layouts/default 
+include ../../mixins/messages-success
+block main 
+    .col-9 
+        +messages-success(5000)
+        +messages-error(5000)
+        .my-3.card 
+            .card-header
+                h1 Thêm mới user
+            .card-body 
+                form(class="form-group" method="POST" action=`/admin/users/create`)
+                    .mb-3 
+                        label(class="form-label") Full name
+                        input(type="text" name="fullName" value="" class="form-control")
+                    .mb-3 
+                        label(class="form-label") Email
+                        input(type="text" name="email" value="" class="form-control")
+                    .mb-3 
+                        label(class="form-label") User name
+                        input(type="text" name="userName" value="" class="form-control")
+                    .mb-3 
+                        label(class="form-label") Password
+                        input(type="password" name="password" value="" class="form-control")
+                    .mb-3 
+                        label(class="form-label") Roles
+                        select(name="roleId" class="form-control")
+                            option(value="" selected) ----- Chọn quyền -----  
+                            each role in roles 
+                              option(value=role.id ) #{role.title} 
+                    .mb-3 
+                        label(class="form-label") status
+                        .row.mx-3
+                            label(for="" class="col-2 mr-3") Active                               
+                                input(type="radio" class="form-radio" name="status" value="active" checked) 
+                            label(for="" class="col-2 mr-3") Unactive   
+                                input(type="radio" class="form-radio col-2" name="status" value="unactive")
+                    .mb-3.text-center 
+                        input(type="submit" class="btn btn-primary" value="Thêm user")                      

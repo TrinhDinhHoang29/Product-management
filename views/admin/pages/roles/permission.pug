@@ -39,6 +39,42 @@ block main
                     each record in records 
                         td 
                             input(type="checkbox" act="roles-edit")
+                tr(row)
+                    td 
+                        b  Sản phẩm 
+                tr(row)
+                    td Thêm sản phẩm 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="products-add")
+                tr(row )
+                    td Xóa sản phẩm 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="products-delete")
+                tr(row )
+                    td Sửa sản phẩm 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="products-edit")
+                tr(row)
+                    td 
+                        b  Danh mục sản phẩm 
+                tr(row)
+                    td Thêm Danh mục sản phẩm 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="products-category-add")
+                tr(row )
+                    td Xóa Danh mục sản phẩm 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="products-category-delete")
+                tr(row )
+                    td Sửa Danh mục sản phẩm 
+                    each record in records 
+                        td 
+                            input(type="checkbox" act="products-category-edit")
     form(action="/admin/roles/permission?_method=PATCH" method="post" frm-permission)
         input(type="text" class="d-none" name="permission")               
     script(src="/admin/js/roles.js") 
