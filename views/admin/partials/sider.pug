@@ -1,18 +1,17 @@
 .col-3.sider.px-3 
-    ul
+    ul  
         li
             a(href="/admin/dashboard") Dashboard
-        li 
-            a(href="/admin/products") Products 
-        li 
-            a(href="/admin/products/restores") Products deleted 
-        li 
-            a(href="/admin/products/create") Create product 
-        li 
-            a(href="/admin/products-category") Products Category 
-        li 
-            a(href="/admin/roles") Roles
-        li 
-            a(href="/admin/roles/Permission") Permission
-        li 
-            a(href="/admin/users") users
+        - if (role.permissions.includes("products-view"))       
+            li 
+                a(href="/admin/products") Products
+        - if (role.permissions.includes("products-category-view"))        
+            li 
+                a(href="/admin/products-category") Products Category
+        - if (role.permissions.includes("roles-view"))
+            li 
+                a(href="/admin/roles") Roles
+        - if (role.permissions.includes("users-view"))
+            li 
+                a(href="/admin/users") users
+        

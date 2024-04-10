@@ -10,71 +10,119 @@ block main
         .row.my-3 
             .col-8 
             .col-4 
-                button(class="btn btn-primary" btn-update-roles) Cập nhật
-        table.container.table.text-center 
-            thead.table-dark 
-                tr 
-                    th Các nhóm quyền 
-                    each record in records 
-                        th #{record.title}
-            tbody 
-                tr(row)
-                    td 
-                        b  Nhóm quyền 
-                    each record in records 
+                - if (role.permissions.includes("permissions-edit"))
+                    button(class="btn btn-primary" btn-update-roles) Cập nhật
+        - if (role.permissions.includes("permissions-edit"))
+            table.container.table.text-center 
+                thead.table-dark 
+                    tr 
+                        th Các nhóm quyền 
+                        each record in records 
+                            th #{record.title}
+                tbody 
+                    tr(row)
                         td 
-                            input(type="text" value=record.id roles-id class="d-none")
-                tr(row)
-                    td Thêm quyền 
-                    each record in records 
+                            b  Nhóm quyền 
+                        each record in records 
+                            td 
+                                input(type="text" value=record.id roles-id class="d-none")
+                    tr(row)
+                        td Xem danh sách quyền
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="roles-view")
+                    tr(row)
+                        td Thêm quyền 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="roles-create")
+                    tr(row )
+                        td Xóa quyền 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="roles-delete")
+                    tr(row )
+                        td Sửa quyền 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="roles-edit")
+                    tr(row)
                         td 
-                            input(type="checkbox" act="roles-add")
-                tr(row )
-                    td Xóa quyền 
-                    each record in records 
+                            b  Sản phẩm 
+                    tr(row)
+                        td Xem sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-view")
+                    tr(row)
+                        td Thêm sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-create")
+                    tr(row )
+                        td Xóa sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-delete")
+                    tr(row )
+                        td Sửa sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-edit")
+                    tr(row)
                         td 
-                            input(type="checkbox" act="roles-delete")
-                tr(row )
-                    td Sửa quyền 
-                    each record in records 
+                            b  Danh mục sản phẩm 
+                    tr(row)
+                        td  Xem danh mục sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-category-view")
+                    tr(row)
+                        td Thêm Danh mục sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-category-create")
+                    tr(row )
+                        td Xóa Danh mục sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-category-delete")
+                    tr(row )
+                        td Sửa Danh mục sản phẩm 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="products-category-edit")
+                    tr(row)
                         td 
-                            input(type="checkbox" act="roles-edit")
-                tr(row)
-                    td 
-                        b  Sản phẩm 
-                tr(row)
-                    td Thêm sản phẩm 
-                    each record in records 
+                            b  Danh mục users 
+                    tr(row)
+                        td  Xem danh sách users 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="users-view")
+                    tr(row)
+                        td Thêm users
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="users-create")
+                    tr(row )
+                        td xóa users 
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="users-delete")
+                    tr(row )
+                        td Sửa users
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="users-edit")
+                    tr(row )
                         td 
-                            input(type="checkbox" act="products-add")
-                tr(row )
-                    td Xóa sản phẩm 
-                    each record in records 
-                        td 
-                            input(type="checkbox" act="products-delete")
-                tr(row )
-                    td Sửa sản phẩm 
-                    each record in records 
-                        td 
-                            input(type="checkbox" act="products-edit")
-                tr(row)
-                    td 
-                        b  Danh mục sản phẩm 
-                tr(row)
-                    td Thêm Danh mục sản phẩm 
-                    each record in records 
-                        td 
-                            input(type="checkbox" act="products-category-add")
-                tr(row )
-                    td Xóa Danh mục sản phẩm 
-                    each record in records 
-                        td 
-                            input(type="checkbox" act="products-category-delete")
-                tr(row )
-                    td Sửa Danh mục sản phẩm 
-                    each record in records 
-                        td 
-                            input(type="checkbox" act="products-category-edit")
+                            b Phân quyền !Important
+                        each record in records 
+                            td 
+                                input(type="checkbox" act="permissions-edit")
+        - else 
+            h1 Bạn không có quyền truy cập trang này
     form(action="/admin/roles/permission?_method=PATCH" method="post" frm-permission)
         input(type="text" class="d-none" name="permission")               
     script(src="/admin/js/roles.js") 

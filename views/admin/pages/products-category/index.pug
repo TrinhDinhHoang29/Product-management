@@ -22,14 +22,17 @@ block main
             .card-body
                 .row
                     .col-8
-                        +changeMulti("/admin/products-Category/change-multi?_method=PATCH")
+                        - if (role.permissions.includes("products-category-edit"))
+                            +changeMulti("/admin/products-Category/change-multi?_method=PATCH")
                     .col-4
-                        a(href="/admin/products-Category/create" class="btn btn-outline-success") + Thêm sản phẩm
+                        - if (role.permissions.includes("products-category-create"))
+                            a(href="/admin/products-Category/create" class="btn btn-outline-success") + Thêm sản phẩm
                 table(class=" table table-striped my-3 text-center" checkbox-multi) 
                     thead.table-dark 
-                        tr 
-                            th 
-                                input(type="checkbox", name="checkAll")
+                        tr  
+                            - if (role.permissions.includes("products-category-edit"))
+                                th 
+                                    input(type="checkbox", name="checkAll")
                             th STT
                             th Hình ảnh
                             th Tiêu đề
@@ -40,8 +43,9 @@ block main
                     tbody 
                         each item,index in productsCategory 
                             tr 
-                                td 
-                                    input(type="checkbox" name="id" value=item.id)
+                                - if (role.permissions.includes("products-category-edit"))
+                                    td 
+                                        input(type="checkbox" name="id" value=item.id)
                                 td #{index+1}
                                 td
                                     img(src=item.thumbnail, alt="",width="100px")
@@ -49,18 +53,21 @@ block main
                                 td #{item.parentId}
                                 td #{item.posision}
                                 td 
-                                    - if(item.status == "active")
-                                        a(button-change-status id-change=item.id status-change=item.status href="javascript:")
-                                            span.badge.bg-success Đang hoạt động 
-                                    - else
-                                        a(button-change-status id-change=item.id status-change=item.status href="javascript:")
-                                            span.badge.bg-danger Dừng hoạt động
+                                    - if (role.permissions.includes("products-category-edit"))
+                                        - if(item.status == "active")
+                                            a(button-change-status id-change=item.id status-change=item.status href="javascript:")
+                                                span.badge.bg-success Đang hoạt động 
+                                        - else
+                                            a(button-change-status id-change=item.id status-change=item.status href="javascript:")
+                                                span.badge.bg-danger Dừng hoạt động
                                 td 
                                     button(class="btn btn-secondary mx-1") 
-                                        a(href=`/admin/products/detail/${item.id}`) Chi tiết 
-                                    button(class="btn btn-warning mx-1") 
-                                        a(href=`/admin/products-Category/edit/${item.id}`) Sửa
-                                    button(class="btn btn-danger mx-1" id-deleteItem=item.id button-deleteItem) Xóa
+                                        a(href=`/admin/products/detail/${item.id}`) Chi tiết
+                                    - if (role.permissions.includes("products-category-edit"))
+                                        button(class="btn btn-warning mx-1") 
+                                            a(href=`/admin/products-Category/edit/${item.id}`) Sửa 
+                                    - if (role.permissions.includes("products-category-delete"))
+                                        button(class="btn btn-danger mx-1" id-deleteItem=item.id button-deleteItem) Xóa
 
         //- nav(aria-label="Page navigation example")
             ul(class="pagination")

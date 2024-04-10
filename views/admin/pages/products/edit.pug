@@ -7,56 +7,57 @@ block main
         .my-3.card 
             .card-header
                 h1 Chỉnh sửa sản phẩm
-            .card-body 
-                form(class="form-group" method="POST" action= `/admin/products/edit/${product.id}?_method=PATCH` enctype="multipart/form-data")
-                    .mb-3 
-                        label(class="form-label") Title
-                        input(type="text" name="title" class="form-control" value=product.title)
-                    .mb-3 
-                        label(class="form-label") ParentId
-                        select(name="productCategoryId"  class="form-control")
-                            option(value="" selected ) ----- Chọn danh mục cha -----
-                            +parent-category(records,1,product.productCategoryId)
-                    .mb-3 
-                        label(class="form-label") Description
-                        textarea(name="description", cols="30", rows="5" class="form-control" ) #{product.description}
-                    .mb-3 
-                        label(class="form-label") price
-                        input(type="text" name="price" class="form-control" value=product.price )
-                    .mb-3 
-                        label(class="form-label") Discount
-                        input(type="text" name="discountPercentage" class="form-control" value=product.discountPercentage)
-                    .mb-3 
-                        label(class="form-label") Rating
-                        input(type="text" class="form-control" name="rating" value=product.rating)
-                    .mb-3 
-                        label(class="form-label") Stock
-                        input(type="text" class="form-control" name="stock" value=product.stock)
-                    .mb-3 
-                        label(class="form-label") brand
-                        input(type="text" name="brand" class="form-control" value=product.brand)
-                    .mb-3 
-                        label(class="form-label") category
-                        input(type="text" class="form-control" name="category" value=product.category)
-                    div(class="mb-3" upload-image) 
-                        label(class="form-label d-block") thumbnail
-                        input(type="file" accept="image/*" class="form-file d-block" name="thumbnail" value=product.thumbnail upload-image-input)
-                        div
-                            div(class = "" close-image-upload) x 
-                            img(src=product.thumbnail  alt="" upload-image-preview width="200px" class="d-inline" max-height="200px")
+            .card-body
+                - if (role.permissions.includes("products-edit"))
+                    form(class="form-group" method="POST" action= `/admin/products/edit/${product.id}?_method=PATCH` enctype="multipart/form-data")
+                        .mb-3 
+                            label(class="form-label") Title
+                            input(type="text" name="title" class="form-control" value=product.title)
+                        .mb-3 
+                            label(class="form-label") ParentId
+                            select(name="productCategoryId"  class="form-control")
+                                option(value="" selected ) ----- Chọn danh mục cha -----
+                                +parent-category(records,1,product.productCategoryId)
+                        .mb-3 
+                            label(class="form-label") Description
+                            textarea(name="description", cols="30", rows="5" class="form-control" ) #{product.description}
+                        .mb-3 
+                            label(class="form-label") price
+                            input(type="text" name="price" class="form-control" value=product.price )
+                        .mb-3 
+                            label(class="form-label") Discount
+                            input(type="text" name="discountPercentage" class="form-control" value=product.discountPercentage)
+                        .mb-3 
+                            label(class="form-label") Rating
+                            input(type="text" class="form-control" name="rating" value=product.rating)
+                        .mb-3 
+                            label(class="form-label") Stock
+                            input(type="text" class="form-control" name="stock" value=product.stock)
+                        .mb-3 
+                            label(class="form-label") brand
+                            input(type="text" name="brand" class="form-control" value=product.brand)
+                        .mb-3 
+                            label(class="form-label") category
+                            input(type="text" class="form-control" name="category" value=product.category)
+                        div(class="mb-3" upload-image) 
+                            label(class="form-label d-block") thumbnail
+                            input(type="file" accept="image/*" class="form-file d-block" name="thumbnail" value=product.thumbnail upload-image-input)
+                            div
+                                div(class = "" close-image-upload) x 
+                                img(src=product.thumbnail  alt="" upload-image-preview width="200px" class="d-inline" max-height="200px")
 
-                    .mb-3 
-                        label(class="form-label") status
-                        .row.mx-3
-                            - if(product.status=="active")
-                                label(for="" class="col-2 mr-3") Active                               
-                                    input(type="radio" class="form-radio" name="status" value="active" checked) 
-                                label(for="" class="col-2 mr-3") Unactive   
-                                    input(type="radio" class="form-radio col-2" name="status" value="unactive") 
-                            - else 
-                                label(for="" class="col-2 mr-3") Active                               
-                                    input(type="radio" class="form-radio" name="status" value="active" ) 
-                                label(for="" class="col-2 mr-3") Unactive   
-                                    input(type="radio" class="form-radio col-2" name="status" value="unactive" checked) 
-                    .mb-3.text-center 
-                        input(type="submit" class="btn btn-primary" value="Cập nhật")
+                        .mb-3 
+                            label(class="form-label") status
+                            .row.mx-3
+                                - if(product.status=="active")
+                                    label(for="" class="col-2 mr-3") Active                               
+                                        input(type="radio" class="form-radio" name="status" value="active" checked) 
+                                    label(for="" class="col-2 mr-3") Unactive   
+                                        input(type="radio" class="form-radio col-2" name="status" value="unactive") 
+                                - else 
+                                    label(for="" class="col-2 mr-3") Active                               
+                                        input(type="radio" class="form-radio" name="status" value="active" ) 
+                                    label(for="" class="col-2 mr-3") Unactive   
+                                        input(type="radio" class="form-radio col-2" name="status" value="unactive" checked) 
+                        .mb-3.text-center 
+                            input(type="submit" class="btn btn-primary" value="Cập nhật")
