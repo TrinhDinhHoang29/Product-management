@@ -4,6 +4,7 @@ const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
 const treeCategory = require("../../helper/treeCategory");
 const productCategoryModel = require("../../models/products-category.model");
+const userModel = require("../../models/users.model");
 module.exports.products =async (req,res)=>{
     
     let filterStatus = filterStatusHelper(req.query);//Lấy từ helper
@@ -38,6 +39,14 @@ module.exports.products =async (req,res)=>{
 
     // pagination end ---------------------------------------
     let Products=await productsModel.find(find).limit(objPagination.limiteItem).skip(objPagination.skipItem).sort(sort);
+    for(let item of Products){
+
+        if(item.createdBy.id){
+            const fullName = await userModel.findOne({_id:item.createdBy.id}).select("fullName");
+            item.fullNameCreate = fullName.fullName;
+            item.dateCreated = `Ngày tạo: ${item.createdBy.createAt.getDay()}/${item.createdBy.createAt.getMonth()}/${item.createdBy.createAt.getFullYear()}`;
+        }
+    }
     res.render("admin/pages/products/index",{products:Products,
                                             filterStatus:filterStatus,
                                             keyword:objectSearch.keyword,
@@ -74,7 +83,12 @@ module.exports.changeMulti = async (req,res)=>{
 }
 module.exports.deleteItem = async (req,res)=>{
     const idItem = req.params.id;
-    await productsModel.updateOne({_id:idItem},{deleted:false,dateDeleted: new Date()});
+    // console.log(req.body.deletedBy);
+    await productsModel.updateOne({_id:idItem},{deleted:false,deletedBy:{
+        id:res.locals.user._id,
+        deleteAt:Date.now()
+    }});
+    req.flash("success","Deleted successful !!");
     res.redirect("back");
 }
 module.exports.restores = async(req,res)=>{
@@ -102,6 +116,7 @@ module.exports.createPost = async(req,res)=>{
     req.body.discountPercentage = parseFloat(req.body.discountPercentage);
     req.body.rating = parseFloat(req.body.rating);
     req.body.stock = parseFloat(req.body.stock);
+    req.body.createdBy={id:res.locals.user._id};
     const product= new productsModel(req.body);
     await product.save();
     req.flash("success","Tạo sản phẩm thành công");

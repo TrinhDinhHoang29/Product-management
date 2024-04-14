@@ -1,0 +1,9 @@
+mixin menuProductCategory(treeProductsCategory)
+    ul 
+        each element in treeProductsCategory
+                li 
+                    a(href=`/products/${element.slug}`) #{element.title}
+                    - if(element.childItem)
+                        +menuProductCategory(element.childItem)
+            
+

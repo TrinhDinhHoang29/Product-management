@@ -16,7 +16,7 @@ block main
                             a(href=`/admin/products?status=${item.status}`) 
                                 button(class=`btn btn-sm mx-1 btn-outline-success ${item.class}`) #{item.name}
                     .col-6 
-                    +search(keyword)
+                        +search(keyword)
             .card.my-3 
                 +sort("id-asc","price-desc","price-asc")
                 
@@ -40,6 +40,7 @@ block main
                                 th Hình ảnh
                                 th Tiêu đề
                                 th Gía
+                                th Người tạo
                                 th Trạng thái 
                                 th Hành động
                         tbody 
@@ -53,6 +54,9 @@ block main
                                         img(src=item.thumbnail, alt="",width="100px")
                                     td #{item.title}
                                     td #{item.price}$
+                                    td 
+                                       div  #{item.fullNameCreate}
+                                       div  #{item.dateCreated}
                                     td
                                         - if (role.permissions.includes("products-edit"))
                                             - if(item.status == "active")

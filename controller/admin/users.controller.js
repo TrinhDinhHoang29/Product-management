@@ -3,6 +3,14 @@ const roleModel = require("../../models/roles.model");
 const md5 = require('md5');
 module.exports.index =async (req,res)=>{
     const records = await userModel.find({deleted:false}).select("-userName -password");
+    
+    for(let item of records){
+    if(item.createdBy.id){
+            const user = await userModel.findOne({_id:item.createdBy.id});
+            item.fullNameCreate = user.fullName;
+            item.dateCreated = item.createdBy.createAt.getDay()+"/"+item.createdBy.createAt.getMonth()+"/"+item.createdBy.createAt.getFullYear();
+        }
+    }
     res.render("admin/pages/users/index",{records:records});
 }
 module.exports.create = async (req,res)=>{
@@ -11,12 +19,20 @@ module.exports.create = async (req,res)=>{
 }
 module.exports.createPost = async(req,res)=>{
 
+    if(req.body.roleId===""){
+        req.flash("error","Vui long chon quyen !!");
+        res.redirect("back");
+        return;
+    }
     const users =await userModel.find({email:req.body.email,deleted:false});
     if(users.length>0){
         req.flash("error","Email đã tồn tại !!");
         res.redirect("back");
         return;
     }
+
+    req.body.createdBy = {id:res.locals.user._id}
+    // const fullName = await 
     req.body.password = md5(req.body.password);
     const user = new userModel(req.body);
     await user.save();

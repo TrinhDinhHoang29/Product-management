@@ -3,6 +3,8 @@ const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
 const treeCategory = require("../../helper/treeCategory");
 
+// const rolesModel = require("../../models/roles.model");
+
 const productCategoryModel = require("../../models/products-category.model");
 module.exports.index = async (req,res)=>{
     let filterStatus = filterStatusHelper(req.query);//Lấy từ helper
@@ -22,7 +24,13 @@ module.exports.index = async (req,res)=>{
         sort.id = "asc";
     }
     const productsCategory = await productCategoryModel.find(find).sort(sort);
-    res.render("admin/pages/products-category/index",{productsCategory:productsCategory,filterStatus:filterStatus});
+    for(let item of productsCategory){
+        if(item.parentId){
+            const titleParent = await productCategoryModel.findOne({deleted:false ,_id:item.parentId}).select("title");
+            item.titleParent = titleParent.title;
+        }
+    }
+   res.render("admin/pages/products-category/index",{productsCategory:productsCategory,filterStatus:filterStatus});
 }
 module.exports.indexPatch = async(req,res)=>{
     const statusChange = req.params.statusChange;

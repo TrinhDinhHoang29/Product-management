@@ -36,7 +36,7 @@ block main
                             th STT
                             th Hình ảnh
                             th Tiêu đề
-                            th Id parent
+                            th Danh mục cha
                             th Vị trí
                             th Trạng thái 
                             th Hành động
@@ -50,7 +50,7 @@ block main
                                 td
                                     img(src=item.thumbnail, alt="",width="100px")
                                 td #{item.title}
-                                td #{item.parentId}
+                                td #{item.titleParent}
                                 td #{item.posision}
                                 td 
                                     - if (role.permissions.includes("products-category-edit"))

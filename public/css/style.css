@@ -36,3 +36,35 @@
     width: 100%;
     max-height: 170px;
 }
+
+
+.menu-products ul{
+    display: none;
+    padding: 0;
+}
+
+.menu-products:hover > ul,.menu-products li:hover>ul{
+    display: block;
+    z-index: 100;
+}
+
+.menu-products{
+    position: relative;
+}
+.menu-products li{
+    position: relative;
+    min-width: 100px;
+    list-style: none;
+    border: 1px solid;
+    text-align: center;
+}
+.menu-products li a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+.menu-products ul{
+    position: absolute;
+    top: 0;
+    left: 100%;
+}

@@ -15,6 +15,17 @@ const userSchema = new mongoose.Schema({
     deleted:{
         type:Boolean,
         default:false
+    },
+    deletedBy:{
+        id:String,
+        deleteAt:Date
+    },
+    createdBy:{
+        id:String,
+        createAt:{
+            type:Date,
+            default:Date.now
+        }
     }
 },{
     timestamps:true

@@ -25,6 +25,7 @@ block main
                                 th Full name
                                 th Email
                                 th Trạng thái
+                                th Người tạo
                                 th Hành động
                         tbody 
                             each item,index in records 
@@ -32,7 +33,7 @@ block main
                                     td #{index+1}
                                     td #{item.fullName}
                                     td #{item.email}
-                                    td 
+                                    td
                                         - if (role.permissions.includes("users-edit"))
                                             - if(item.status == "active")
                                                 a(button-change-status id-change=item.id status-change=item.status href="javascript:")
@@ -40,6 +41,9 @@ block main
                                             - else
                                                 a(button-change-status id-change=item.id status-change=item.status href="javascript:")
                                                     span.badge.bg-danger Dừng hoạt động
+                                    td  
+                                        div #{item.fullNameCreate}
+                                        div #{item.dateCreated}
                                     td 
                                         button(class="btn btn-secondary mx-1") 
                                             a(href=`/admin/roles/detail/${item.id}`) Chi tiết 

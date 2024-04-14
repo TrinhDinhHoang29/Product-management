@@ -1,17 +1,4 @@
-//- header.header
-//-         .container
-//-             .row.align-items-center
-//-                 .col-3
-//-                     .inner-logo
-//-                         a(href="")
-//-                             img(src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg", alt="");
-//-                 .col-9 
-//-                     .inner-menu 
-//-                         ul 
-//-                             li
-//-                                 a(href="") Trang chủ 
-//-                             li 
-//-                                 a(href="") Sản phẩm 
+include ../mixins/menu-productsCategory.pug
 
 header.header
     .container
@@ -20,13 +7,26 @@ header.header
                 .inner-logo 
                     a(href="/")
                         img(src="https://cdn.haitrieu.com/wp-content/uploads/2022/07/Thanh-pho-Ho-Chi-Minh-1.png", alt="",width="100px")
-
             .col-9
                 .inner-menu 
                     ul.d-flex.flex-wrap
                         li 
                             a(href="/") Trang chủ
-                        li  
-                            a(href="/products") Sản phẩm 
+                        li.menu-products
+                            a(href="/products" class="product--nav") Sản phẩm 
+                            +menuProductCategory(menuProductsCategory)
+                            //- ul 
+                            //-     li 
+                            //-         a(href="") Phu kien nam 
+                            //-         ul 
+                            //-             li 
+                            //-                 a(href="") dong ho nam  
+                            //-     li 
+                            //-         a(href="") Phu kien nu 
+                            //-         ul 
+                            //-             li 
+                            //-                 a(href="") Dong ho nu 
+                            //-             li 
+                            //-                 a(href="") Vay nu    
 
             
