@@ -4,7 +4,7 @@ const treeCategory = require("../helper/treeCategory");
 
 const productCategoryModel = require("../models/products-category.model");
 module.exports.menuProductsCategory = async (req,res,next)=>{
-    const productCategory = await productCategoryModel.find({deleted:false});
+    const productCategory = await productCategoryModel.find({deleted:false,status:"active"});
     res.locals.menuProductsCategory = treeCategory(productCategory);
     next();
 }
