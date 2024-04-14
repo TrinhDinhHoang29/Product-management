@@ -35,6 +35,14 @@
 .product-item .inner-image img{
     width: 100%;
     max-height: 170px;
+    position: relative;
+}
+.featured-text{
+    position: absolute;
+    top: 3%;
+    right: 5%;
+    font-weight: 600;
+
 }
 
 
@@ -53,10 +61,11 @@
 }
 .menu-products li{
     position: relative;
-    min-width: 100px;
+    min-width: 150px;
+    padding:10px 0;
     list-style: none;
-    border: 1px solid;
     text-align: center;
+    background-color: rgb(236, 236, 236);
 }
 .menu-products li a {
     text-decoration: none;

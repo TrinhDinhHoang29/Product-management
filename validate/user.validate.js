@@ -5,5 +5,4 @@ module.exports.createPost = (req,res,next)=>{
     }else{
         next();
     }
-
 }

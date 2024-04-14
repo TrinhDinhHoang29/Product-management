@@ -1,0 +1,18 @@
+mixin products-grid(products)
+    .row 
+        each item in products 
+            .col-4.mb-3
+                .product-item.py-3.px-3.card
+                    .inner-image.card-img-top
+                        a(href="")
+                            img(src=item.thumbnail, alt="")
+                        - if (item.featured==true)
+                            div.featured-text.badge.bg-danger.py-2.px-3 Nổi bật    
+                    .inner-content.card-body 
+                        .inner-title.card-title 
+                            a(href=`/products/detail/${item.slug}`) #{item.title}
+                        .inner-price-new.card-text #{item.price} $
+                        .inner-price-old.card-text 100$
+                        //- .inner-status.card-text #{item.description}
+                        .inner-add-cart.text-center
+                            button.btn.btn-primary.btn-add Thêm vào giỏ
