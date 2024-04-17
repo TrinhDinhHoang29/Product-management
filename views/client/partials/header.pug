@@ -7,7 +7,15 @@ header.header
                 .inner-logo 
                     a(href="/")
                         img(src="https://cdn.haitrieu.com/wp-content/uploads/2022/07/Thanh-pho-Ho-Chi-Minh-1.png", alt="",width="100px")
-            .col-9
+            
+            .col-3 
+                form(action="/search", method="get")
+                    .input-group
+                        input(type="text" name="keywork" class="form-control")
+                        .input-group-append
+                            input(type="submit" class="btn btn-primary" value="Search")
+                     
+            .col-6
                 .inner-menu 
                     ul.d-flex.flex-wrap
                         li 
@@ -15,6 +23,8 @@ header.header
                         li.menu-products
                             a(href="/products" class="product--nav") Sản phẩm 
                             +menuProductCategory(menuProductsCategory)
+                        li 
+                            a(href="/blog") Tạp chí nước hoa 
                             //- ul 
                             //-     li 
                             //-         a(href="") Phu kien nam 

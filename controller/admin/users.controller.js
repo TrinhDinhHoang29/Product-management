@@ -88,11 +88,17 @@ module.exports.editPatch = async(req,res)=>{
 
 }
 module.exports.login = async(req,res)=>{
+    if(req.cookies.token){
+        const user = await userModel.findOne({deleted:false,token:req.cookies.token}).select("-password");   
+        if(user){
+            res.redirect("/admin/dashboard");
+            return;
+        }
+    }
     res.render("admin/pages/auth/login/index");
 }
 module.exports.loginPost = async (req,res)=>{
     const user = await userModel.findOne({deleted:false,email:req.body.email,userName:req.body.userName});
-    // console.log(user);
     if(!user){
         req.flash("error","Account not found !!");
         res.redirect("back");
