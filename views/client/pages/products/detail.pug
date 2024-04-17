@@ -1,6 +1,8 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../../admin/mixins/messages-success.pug
 block main
+    +messages-success("5000")
     .container.my-3 
         .row 
             .col-12
@@ -22,8 +24,8 @@ block main
                                 .card-text.my-3 Trạng thái: 
                                     span.badge.bg-success Đang hoạt động
                             .card-text 
-                                form(action="/card/add", method="post" class="form my-3") 
-                                    input(type="number" name="quantily" class="form-control my-1" min="1" max=product.stock value="1")
+                                form(action=`/cart/add/${product._id}`, method="post" class="form my-3") 
+                                    input(type="number" name="quantity" class="form-control my-1" min="1" max=product.stock value="1")
                                     input(type="submit" class="form-control btn btn-danger" value="Add to card")
         .row.my-3 
             .col-12 !{product.description}

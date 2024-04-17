@@ -15,7 +15,7 @@ header.header
                         .input-group-append
                             input(type="submit" class="btn btn-primary" value="Search")
                      
-            .col-6
+            .col-5
                 .inner-menu 
                     ul.d-flex.flex-wrap
                         li 
@@ -25,6 +25,9 @@ header.header
                             +menuProductCategory(menuProductsCategory)
                         li 
                             a(href="/blog") Tạp chí nước hoa 
+            .col-1 
+                div.cart Giỏ hàng(#{cart.totalQuantity})
+                    
                             //- ul 
                             //-     li 
                             //-         a(href="") Phu kien nam 
