@@ -1,0 +1,53 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/interface-products.pug
+include ../../../admin/mixins/messages-success.pug
+
+block main
+    +messages-success(5000)
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Trang đặt hàng")
+    .container
+        table(class="table table-striped my-3 text-center")
+            thead.table-dark  
+                tr 
+                    th STT
+                    th Hình ảnh
+                    th Tên sản phẩm
+                    th Gía
+                    th Số lượng
+                    th Tổng tiền 
+            tbody 
+                each item,index in carts.Products 
+                    tr 
+                        td #{index}
+                        td 
+                            img(src=item.product.thumbnail, alt="" width="100px")
+                        td 
+                            a(href=`/products/detail/${item.product.slug}`) #{item.product.title} 
+                        td #{item.product.price}
+                        td #{item.quantity}
+                        td #{item.product.price*item.quantity} VND
+
+    .container.my-3 
+        .row 
+            .col-8 
+            .col-4 
+                h2 Tổng tiền giỏ hàng 
+                h4 #{carts.totalMoney}
+
+        .row
+            .col-2
+            .col-8
+                form(action="/checkout/order" class="form-group" method="post" class)
+                    label(for="") Họ và tên
+                    input(type="text" class="form-control" name="fullName")
+                    label(for="") Số điện thoại
+                    input(type="text" class="form-control" name="phone")
+                    label(for="") Địa chỉ
+                    input(type="text" class="form-control" name="address")     
+                    input(type="submit" value="Thanh toán" class="btn btn-success my-3 form-control")
+            .col-2
+

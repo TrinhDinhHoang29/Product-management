@@ -1,4 +1,14 @@
 const cartsModel = require("../../models/cart.model");
+const ProductsModel = require("../../models/products.model");
+
+module.exports.index = async (req,res)=>{
+    const carts = await cartsModel.findOne({_id:req.cookies.cartId});
+    for(let item of carts.Products){
+        item.product = await ProductsModel.findOne({_id:item.product_id}).select("title thumbnail price slug");
+    }
+    carts.totalMoney = carts.Products.reduce((total,value)=>total+value.product.price*value.quantity,0);
+    res.render("client/pages/cart/index",{carts:carts});
+}
 
 module.exports.add= async(req,res)=>{
     const productId = req.params.id;
@@ -27,4 +37,27 @@ module.exports.add= async(req,res)=>{
         res.redirect("back");
     }
 
+}
+
+
+module.exports.delete = async(req,res)=>{
+    const productId = req.params.productId;
+   const product= await cartsModel.updateOne({_id:req.cookies.cartId},{
+        $pull:{Products:{
+            product_id:productId
+        }}
+    })
+    req.flash("success","Đã xóa thành công sản phẩm !!");
+    res.redirect("back");
+}
+module.exports.updateQuantity = async(req,res)=>{
+    const productId = req.params.productId;
+    const quantity = req.params.quantity;
+    await cartsModel.updateOne({_id:req.cookies.cartId,"Products.product_id":productId},{
+        "$set":{
+            "Products.$.quantity":quantity
+        }
+    })
+    res.redirect("back");
+   
 }

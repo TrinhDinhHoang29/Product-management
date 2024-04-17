@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/interface-products.pug
+include ../../../admin/mixins/messages-success.pug
+
+block main
+    +messages-success(5000)
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Giỏ hàng")
+    .container
+        table(class="table table-striped my-3 text-center")
+            thead.table-dark  
+                tr 
+                    th STT
+                    th Hình ảnh
+                    th Tên sản phẩm
+                    th Gía
+                    th Số lượng
+                    th Tổng tiền 
+                    th Hành động 
+            tbody 
+                each item,index in carts.Products 
+                    tr 
+                        td #{index}
+                        td 
+                            img(src=item.product.thumbnail, alt="" width="100px")
+                        td 
+                            a(href=`/products/detail/${item.product.slug}`) #{item.product.title} 
+                        td #{item.product.price}
+                        td 
+                            input(type="number" min=1 product-quantity=item.product_id value=item.quantity) 
+                        td #{item.product.price*item.quantity} VND
+                        td 
+                            a(href=`/cart/delete/${item.product_id}` class="btn btn-danger") Xóa
+
+    .container.my-3 
+        .row 
+            .col-8 
+            .col-4 
+                h2 Tổng tiền giỏ hàng 
+                h4 #{carts.totalMoney}
+                a(href="/checkout" class="btn btn-success") Thanh toán 
+

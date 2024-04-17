@@ -77,3 +77,23 @@
     top: 0;
     left: 100%;
 }
+.messages-success{
+    width: 300px;
+    position: fixed;
+    z-index: 1000;
+    right: 30px;
+}
+@keyframes alert-hidden{
+    from {
+        right: 30px;
+    }
+    to{
+        right: -200%;
+    }
+
+}
+.alert-hidden{
+    animation-name: alert-hidden;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
