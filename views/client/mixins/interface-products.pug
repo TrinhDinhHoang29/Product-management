@@ -15,4 +15,6 @@ mixin products-grid(products)
                         .inner-price-old.card-text 100$
                         //- .inner-status.card-text #{item.description}
                         .inner-add-cart.text-center
-                            button.btn.btn-primary.btn-add Thêm vào giỏ
+                            form(action=`/cart/add/${item.id}`, method="post" class="form my-3") 
+                                input(type="number" name="quantity" class="form-control my-1 d-none" min="1" max=item.stock value="1")
+                                input(type="submit" class="form-control btn btn-primary" value="Add to card")

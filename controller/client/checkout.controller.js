@@ -14,11 +14,15 @@ module.exports.order = async (req,res)=>{
     const cartId = req.cookies.cartId;
     const userInfo = req.body;
     const carts = await cartsModel.findOne({_id:cartId});
+    let productsInfo = [];
     for(let item of carts.Products){
         const product = await ProductsModel.findOne({_id:item.product_id}).select("price");
         item.price = product.price;
+        
+        productsInfo.push({product_id:item.product_id,
+                        quantity:item.quantity,
+                        price:product.price});
     }
-    const productsInfo = carts.Products;
     try{
     const order = new orderModel({
         cart_id:cartId,
@@ -26,13 +30,22 @@ module.exports.order = async (req,res)=>{
         products:productsInfo
     });
     await order.save();
-    req.flash("success","Đặt hàng thành công !!");
     await cartsModel.updateOne({_id:cartId},{Products:[]});
-    res.redirect("back");
+    res.redirect(`/checkout/success/${order._id}`);
     }catch(err){
         console.log(err);
         req.flash("success","Đặt hàng thất bại");
         res.redirect("back");
     }
     
+}
+module.exports.success = async (req,res)=>{
+    const order = await orderModel.findOne({deleted:false,_id:req.params.productId});
+    for(const item of order.products){
+        let product = await ProductsModel.findOne({_id:item.product_id}).select("thumbnail slug title price");
+        item.thumbnail = product.thumbnail;
+        item.slug = product.slug;
+        item.title = product.title;
+    }
+    res.render("client/pages/checkout/success",{order:order});
 }
