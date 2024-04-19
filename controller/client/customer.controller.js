@@ -2,6 +2,7 @@ const md5 = require('md5');
 const customerModel = require("../../models/customer.model");
 const carts = require("../../models/cart.model");
 const forgotPasswordModel = require("../../models/forgotPassword.model");
+const nodemailer = require("../../helper/nodemailer.helper");
 module.exports.register = async (req,res)=>{
 
     res.render("client/pages/customer/register");
@@ -28,12 +29,18 @@ module.exports.loginPost = async(req,res)=>{
         res.redirect("back");
         return;
     }
-    //await carts.updateOne({_id:req.cookies.cartId},{user_id:customer._id});
+    const cart = await carts.findOne({user_id:customer._id});
+    if(!cart){
+    await carts.updateOne({_id:req.cookies.cartId},{user_id:customer._id});
+    }else{
+        res.cookie("cartId",cart._id);
+    }
     res.cookie("tokenCustomer",customer.tokenCustomer);
     res.redirect("/");
 }
 module.exports.logout = (req,res)=>{
     res.clearCookie("tokenCustomer");
+    res.clearCookie("cartId");
     res.redirect("/customer/login");
 }
 module.exports.forgotPassword = async(req,res)=>{
@@ -49,6 +56,41 @@ module.exports.forgotPasswordPost = async(req,res)=>{
     req.body.expireAt = Date.now();
     const forgotPassword = new forgotPasswordModel(req.body);
     await forgotPassword.save();
-    res.redirect("back");
+    nodemailer.sendOTP(req.body.email,"Xác thực thông tin tài khoảng",`Mã OTP của bạn là : <b>${forgotPassword.otp}</b> `);
+    res.redirect(`/customer/comfirmOtp/${req.body.email}`);
 
+}
+module.exports.comfirmOtp = async(req,res)=>{
+   res.render("client/pages/customer/comfirmOtp",{email:req.params.email});
+}
+module.exports.comfirmOtpPost = async(req,res)=>{
+    const forgotPassword = await forgotPasswordModel.findOne({email:req.body.email,otp:req.body.otp});
+    const customer = await customerModel.findOne({email:req.body.email});
+    if(!forgotPassword){
+        req.flash("error","Mã otp không đúng !!");
+        res.redirect("back");
+        return;
+    }    
+    res.cookie("tokenCustomer",customer.tokenCustomer);
+    res.redirect("/customer/createPasswordNew");
+
+}
+module.exports.createPasswordNew = async(req,res)=>{
+    res.render("client/pages/customer/createPasswordNew");
+}
+
+module.exports.createPasswordNewPost = async(req,res)=>{
+    if(req.body.password!=req.body.rePassword){
+        req.flash("error","Mật khẩu không khớp");
+        res.redirect("back");
+        return;
+    }
+    if(req.body.password==""||req.body.rePassword==""){
+        req.flash("error","Không để trống");
+        res.redirect("back");
+        return;
+    }
+    await customerModel.updateOne({tokenCustomer:req.cookies.tokenCustomer},{password:md5(req.body.password)});
+    req.flash("success","Đổi mật khẩu thành công !!");
+    res.redirect("back");
 }

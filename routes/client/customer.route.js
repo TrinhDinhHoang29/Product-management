@@ -11,5 +11,9 @@ router.post("/login",customerValidate.login,customercartController.loginPost);
 router.get("/logout",customercartController.logout);
 router.get("/forgotPassword",customercartController.forgotPassword);
 router.post("/forgotPassword",customercartController.forgotPasswordPost);
+router.get("/comfirmOtp/:email",customercartController.comfirmOtp);
+router.post("/comfirmOtp",customerValidate.comfirmOtp,customercartController.comfirmOtpPost);
+router.get("/createPasswordNew",customercartController.createPasswordNew);
+router.post("/createPasswordNew",customercartController.createPasswordNewPost);
 
 module.exports = router;

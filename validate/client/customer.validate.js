@@ -29,3 +29,12 @@ module.exports.login =async (req,res,next)=>{
     }
     next();
 }
+
+module.exports.comfirmOtp = async (req,res,next)=>{
+    if(req.body.email==""||req.body.otp==""){
+        req.flash("error","Error !!");
+        res.redirect("back");
+        return;
+    }
+    next();
+}

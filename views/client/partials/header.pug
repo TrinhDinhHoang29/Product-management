@@ -35,6 +35,9 @@ header.header
                         
             .col-1 
                 a(href="/cart") 
-                    div.cart Giỏ hàng(#{cart.totalQuantity})
+                    - if (cart)
+                        div.cart Giỏ hàng(#{cart.totalQuantity})
+                    -else
+                        div.cart Giỏ hàng()
 
             
