@@ -5,6 +5,8 @@ const rolesRouter = require("./roles.router");
 const usersRouter = require("./users.router");
 const authRouter = require("./auth.router");
 const blogRouter = require("./blog.router");
+const orderRouter = require("./order.router");
+
 const tokenMiddlewares = require("../../middlewares/admin/auth.middleware");
 
 module.exports = (app)=>{
@@ -15,5 +17,7 @@ module.exports = (app)=>{
     app.use("/admin/users",tokenMiddlewares.checkToken,usersRouter);
     app.use("/admin/auth/",authRouter);
     app.use("/admin/blog",tokenMiddlewares.checkToken,blogRouter);
+    app.use("/admin/order",tokenMiddlewares.checkToken,orderRouter);
+
     
 }

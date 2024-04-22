@@ -1,0 +1,32 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/interface-products.pug
+include ../../../admin/mixins/messages-success.pug
+
+block main
+    +messages-success(5000)
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Cuộc trò chuyện")
+    .row.justify-content-center.my-3
+        div(class="chat col-5" myId=customerInfo._id)
+            .inner-body 
+                each item in chats
+                    div(class=item.customer_id==customerInfo._id?"inner-outgoing":"inner-incoming")
+                        - if (item.customer_id!=customerInfo._id)
+                            .inner-name #{item.fullName}
+                        .inner-content #{item.content} 
+                    //- div.inner-incoming
+                    //-     .inner-name Em yêu 
+                    //-     .inner-content Sao ạaaaaaaaaaaaaaaaaaaaaaaaa
+            form( id="form" action="")
+                div.input-group 
+                    input(id="input" class="form-control" autocomplete="off")
+                    div.input-group-append
+                        button.btn.btn-primary Send 
+    script(src="/socket.io/socket.io.js")
+    script(src="/js/socket.js") 
+    script(src="/js/chat.js") 
+
+

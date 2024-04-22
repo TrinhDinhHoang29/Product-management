@@ -15,7 +15,7 @@ header.header
                         .input-group-append
                             input(type="submit" class="btn btn-primary" value="Search")
                      
-            .col-7
+            .col-5
                 .inner-menu 
                     ul.d-flex.flex-wrap
                         li 
@@ -25,19 +25,29 @@ header.header
                             +menuProductCategory(menuProductsCategory)
                         li 
                             a(href="/blog") Tạp chí nước hoa
-                        li 
-                            - if (customerInfo)
-                                a(href="/customer/logout" class="btn btn-danger") Đăng xuất 
-                            - else 
-                                a(href="/customer/login" class="btn btn-primary") Đăng nhập 
-                                a(href="/customer/register" class="btn btn-primary") Đăng ký
-                                a(href="/customer/forgotPassword" class="btn btn-primary") Quên mật khẩu
                         
-            .col-1 
-                a(href="/cart") 
-                    - if (cart)
-                        div.cart Giỏ hàng(#{cart.totalQuantity})
-                    -else
-                        div.cart Giỏ hàng()
+            .col-3 
+                .row
+                    .col-3
+                        a(href="/cart") 
+                            - if (cart)
+                                div.cart Giỏ hàng(#{cart.totalQuantity})
+                            -else
+                                div.cart Giỏ hàng()
+                    .col-9
+                        - if (customerInfo)
+                            .row 
+                                .col-6  
+                                    a(href="/customer") #{customerInfo.fullName} 
+                                .col-6
+                                    a(href="/customer/logout" class="btn btn-danger") Đăng xuất 
+                        - else
+                            .row
+                                .col-4 
+                                    a(href="/customer/login" class="btn btn-primary") Đăng nhập 
+                                .col-4
+                                    a(href="/customer/register" class="btn btn-primary") Đăng ký
+                                .col-4
+                                    a(href="/customer/forgotPassword" class="btn btn-primary") Quên mật khẩu
 
             

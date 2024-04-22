@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/interface-products.pug
+include ../../../admin/mixins/messages-success.pug
+
+block main
+    +messages-success(5000)
+    +messages-error(5000)
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head("Thông tin cá nhân")
+    .container.my-3 
+        h1 #{customerInfo.fullName}
+           
+    
+

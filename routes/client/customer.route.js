@@ -4,6 +4,7 @@ const customerValidate = require("../../validate/client/customer.validate");
 const customercartController = require("../../controller/client/customer.controller");
 
 
+router.get("/",customercartController.index);
 router.get("/register",customercartController.register);
 router.post("/register",customerValidate.register,customercartController.registerPost);
 router.get("/login",customercartController.login);

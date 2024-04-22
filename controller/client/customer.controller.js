@@ -3,6 +3,10 @@ const customerModel = require("../../models/customer.model");
 const carts = require("../../models/cart.model");
 const forgotPasswordModel = require("../../models/forgotPassword.model");
 const nodemailer = require("../../helper/nodemailer.helper");
+module.exports.index = async (req,res)=>{
+
+    res.render("client/pages/customer/index");
+}
 module.exports.register = async (req,res)=>{
 
     res.render("client/pages/customer/register");
