@@ -2,7 +2,7 @@
     border: 1px solid gray;
     max-height: 450px;
     overflow-y: auto;
-
+    position: relative;
 }
 
 .inner-content {
@@ -29,3 +29,44 @@
     background-color: gainsboro;
     color: black;
 }
+
+.button-icon.hidden{
+    display: none;
+}
+
+.button-icon{
+    position: absolute;
+    top: -1050%;
+    left: 52%;
+}
+.parrentShowIcon{
+    /* position: relative; */
+
+}
+.showTyping{
+    display: block;
+}
+.hiddenTyping{
+    display: none;
+}
+.chat .custom-file-container .label-container {
+    display: none;
+}
+
+.chat .custom-file-container .input-container{
+   display: none;
+}
+.chat .custom-file-container .image-preview{
+   height: auto;
+   padding: 0;
+   border-radius:0 ;
+ }
+ .chat .custom-file-container .image-preview-item{
+    width:70px;
+    background-size: contain;
+  }
+  .chat .custom-file-container{   
+    position: absolute;
+    top: 100%;
+    width: 100%;
+  }

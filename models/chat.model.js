@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const chatSchema = new  mongoose.Schema({
     customer_id:String,
     content:String,
-    images:String,
+    images:Array,
     deleted:{
-        type:Boolean,
+        type:Boolean, 
         default:false
     }
 },{

@@ -137,8 +137,6 @@ module.exports.editPatch=async(req,res)=>{
     req.body.discountPercentage = parseFloat(req.body.discountPercentage);
     req.body.rating = parseFloat(req.body.rating);
     req.body.stock = parseFloat(req.body.stock);
-    if(req.file)
-       req.body.thumbnail =`/uploads/${req.file.filename}`;
     const product= await productsModel.updateOne({_id:req.params.id},req.body);
     req.flash("success","Thêm sản phẩm thành công");
     res.redirect("back");
