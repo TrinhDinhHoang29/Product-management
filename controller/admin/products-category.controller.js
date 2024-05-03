@@ -52,6 +52,7 @@ module.exports.create =async (req,res)=>{
     res.render("admin/pages/products-category/create",{records:recordsNew});
 }
 module.exports.createPost = async (req,res)=>{
+    
     if(req.body.posision=="")
     {
         count = await productCategoryModel.find({deleted:false}).count();
@@ -63,6 +64,7 @@ module.exports.createPost = async (req,res)=>{
     await productCategory.save();
     req.flash("success","Thêm danh mục sản phẩm thành công");
     res.redirect("/admin/products-category");
+    
 }
 module.exports.changeMulti = async(req,res)=>{
     const type = req.body.type;

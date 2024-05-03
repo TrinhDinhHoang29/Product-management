@@ -29,6 +29,7 @@ app.use(cookieParser("vadasd"));
 app.use(session({cookie:{maxAge:6000}}));
 app.use(flash());
 // flash end ------------------
+
 const routesClient= require("./routes/client/index.route");
 const routesAdmin= require("./routes/admin/index.router");
 

@@ -113,3 +113,4 @@ socket.on('SEVER_SEND_TYPING', function(objTyping) {
 });
 
 //END TYPING
+const gallery = new Viewer(document.querySelector('.inner-body'));

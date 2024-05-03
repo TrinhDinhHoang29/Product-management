@@ -5,8 +5,7 @@ module.exports = (res)=>{
     _io.once('connection', (socket) => {
         socket.on('CLIENT_SEND_MESSAGE',async (data)=> {
            //  socket.emit("SEVER_SEND_MESSAGE",msg);
-           const images  = [];
-  
+           const images  = []; 
            for (const image of data.images) {
               const link = await cloud.upload(image);
               images.push(link);

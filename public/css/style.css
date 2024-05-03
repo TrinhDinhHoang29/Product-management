@@ -97,3 +97,23 @@
     animation-duration: 0.5s;
     animation-fill-mode: both;
 }
+.list-control-users{
+    list-style: none;
+}
+.box-user{
+    display: flex;
+    align-items: center;
+    border: 1px solid gray;
+}
+.btn-cancel-friend,.btn-add-friend{
+    padding: 5px 15px;
+}
+.box-user .btn-cancel-friend{
+    display: none;
+}
+.box-user.add .btn-add-friend{
+    display: none;
+}
+.box-user.add .btn-cancel-friend{
+    display: inline-block;
+}

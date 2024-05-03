@@ -6,6 +6,9 @@ const customerSchema = new mongoose.Schema({
     email:String,
     userName:String,
     password:String,
+    requestAddFriends:Array,
+    appceptAddFriends:Array,
+    listFriend:Array,
     status:{
         type:String,
         default:"active"
