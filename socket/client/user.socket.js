@@ -1,30 +1,7 @@
 const usersModel = require("../../models/customer.model");
 module.exports = (res)=>{
-    _io.once('connection', (socket) => {
-        socket.on("CLIENT_ADD_FRIEND",async (idUserAdd)=>{
-            const myId = res.locals.customerInfo._id;
-            //Kiểm tra trong acceptFriends ông b có ông a không
-            const checkAcceptAinB = await usersModel.findOne({_id:idUserAdd,appceptAddFriends:myId})
-            if(!checkAcceptAinB){
-                await usersModel.updateOne({_id:idUserAdd},{
-                    $push:{appceptAddFriends:myId}
-                })            
-            }
-            const checkRequestBinA = await usersModel.findOne({_id:myId,requestAddFriends:idUserAdd})
-            if(!checkRequestBinA){
-                await usersModel.updateOne({_id:myId},{
-                    $push:{requestAddFriends:idUserAdd}
-                })
-            }
-
-        })
-        socket.on("CLIENT_CANCEL_ADD_FRIEND",async (idUserCancelAdd)=>{
-            const myId = res.locals.customerInfo._id;
-            //Ông A hủy lời mời kết bạn ông B
-            //Kiểm tra trong request Ông A có ông B =>Hủy
-            //Kiểm tra tring accept Ông B có ông A => Hủy
-            //Không có cho qua
-            const checkRequestA = await usersModel.findOne({_id:myId,requestAddFriends:idUserCancelAdd});
+    const cancelAdd = async(myId,idUserCancelAdd)=>{
+        const checkRequestA = await usersModel.findOne({_id:myId,requestAddFriends:idUserCancelAdd});
             if(checkRequestA){
                 await usersModel.updateOne({_id:myId},{
                     $pull:{
@@ -40,6 +17,106 @@ module.exports = (res)=>{
                     }
                 })
             }
+    }
+    _io.once('connection', (socket) => {
+        socket.on("CLIENT_ADD_FRIEND",async (idUserAdd)=>{
+            const myId = res.locals.customerInfo.id;
+            //Kiểm tra trong acceptFriends ông b có ông a không
+            const checkAcceptAinB = await usersModel.findOne({_id:idUserAdd,appceptAddFriends:myId})
+            if(!checkAcceptAinB){
+                await usersModel.updateOne({_id:idUserAdd},{
+                    $push:{appceptAddFriends:myId}
+                })            
+            }
+            // Hiển thị realTime lời mời kết bạn của ông A qua ông B
+            const AcceptFriends = await usersModel.findOne({_id:idUserAdd}).select("appceptAddFriends");
+            const lengthAcceptFriends = {
+                userId:idUserAdd,
+                lengthAcceptFriends:AcceptFriends.appceptAddFriends.length
+            }
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);
+            const infoB = await usersModel.findOne({_id:myId}).select("fullName").lean();
+            infoB.userId = idUserAdd;
+            socket.broadcast.emit("SERVER_RETURN_INFO_ACCEPT_FRIENDS",infoB);
+            // End Hiển thị realTime lời mời kết bạn của ông A qua ông B
+            const checkRequestBinA = await usersModel.findOne({_id:myId,requestAddFriends:idUserAdd})
+            if(!checkRequestBinA){
+                await usersModel.updateOne({_id:myId},{
+                    $push:{requestAddFriends:idUserAdd}
+                })
+            }
+            const unserInfo = await usersModel.findOne({_id:idUserAdd}).select("id fullName");
+            socket.emit('SERVER_RETURN_ADD_FRIEND',unserInfo);
+
+        })
+        socket.on("CLIENT_CANCEL_ADD_FRIEND",async (idUserCancelAdd)=>{
+            const myId = res.locals.customerInfo.id;
+            await cancelAdd(myId,idUserCancelAdd);
+            // Hiển thị realTime lời cancel kết bạn của ông A qua ông B
+            const AcceptFriends = await usersModel.findOne({_id:idUserCancelAdd}).select("appceptAddFriends");
+            const lengthAcceptFriends = {
+                userId:idUserCancelAdd,
+                lengthAcceptFriends:AcceptFriends.appceptAddFriends.length
+            }
+            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);   
+            const infoB = await usersModel.findOne({_id:myId}).select("fullName").lean();
+            infoB.userId = idUserCancelAdd;
+            socket.broadcast.emit("SERVER_RETURN_CANCEL_INFO_ACCEPT_FRIENDS",infoB);
+            //End Hiển thị realTime lời cancel kết bạn của ông A qua ông B
+ 
+        })
+        socket.on("CLIENT_APPCEPT_ADD_FRIEND",async (idAppceptUserAdd)=>{
+            //Kiểm tra trong list bạn bè của a có B chưa
+            // và ngược lại
+            // =>Thêm
+            const myId = res.locals.customerInfo.id;
+            const checkListFriendA = await usersModel.findOne({id:myId,listFriend:idAppceptUserAdd});
+            if(!checkListFriendA){
+                await usersModel.updateOne({_id:myId},{
+                    $push:{
+                        listFriend:{
+                            customer_id:idAppceptUserAdd,
+                            room_chat_id:"",
+                    }
+                },
+                    $pull:{appceptAddFriends:idAppceptUserAdd}
+                })
+            }
+            //Hiển thị số lượng lời chấp nhận khi chấp nhận kết bạn
+            const AcceptFriends = await usersModel.findOne({_id:myId}).select("appceptAddFriends");
+            const lengthAcceptFriends = {
+                userId:myId,
+                lengthAcceptFriends:AcceptFriends.appceptAddFriends.length
+            }
+            socket.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);
+            // End hiển thị số lượng lời chấp nhận khi chấp nhận kết bạn
+
+            const checkListFriendB = await usersModel.findOne({id:idAppceptUserAdd,listFriend:myId});
+            if(!checkListFriendB){
+                await usersModel.updateOne({_id:idAppceptUserAdd},{
+                    $push:{
+                        listFriend:{
+                            customer_id:myId,
+                            room_chat_id:"", 
+                        }
+                    },
+                    $pull:{requestAddFriends:idAppceptUserAdd}
+                })
+            }
+           await cancelAdd(idAppceptUserAdd,myId);                   
+        })
+        socket.on("CLIENT_CANCEL_APPCEPT_ADD_FRIEND",async (idCancelAppceptUserAdd)=>{
+            const myId = res.locals.customerInfo.id;
+            await cancelAdd(idCancelAppceptUserAdd,myId);
+            //Hiển thị số lượng lời chấp nhận khi chấp nhận kết bạn
+            const AcceptFriends = await usersModel.findOne({_id:myId}).select("appceptAddFriends");
+            const lengthAcceptFriends = {
+                userId:myId,
+                lengthAcceptFriends:AcceptFriends.appceptAddFriends.length
+            }
+            socket.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);
+            // End hiển thị số lượng lời chấp nhận khi chấp nhận kết bạn
+                            
         })
     })
 }

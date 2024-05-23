@@ -12,20 +12,21 @@ block main
             .col-12
                 +box-head("Danh sách người dùng")
     .container.my-3 
-        .row 
+        div(class ="row" box-parent-accept=customerInfo.id)
             each user in users
-                .col-4 
-                    div(class="box-user add")
+                div(class="col-4" box-userId = user._id ) 
+                    div(class="box-user")
                         div(class="avatar")
                             img(src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg" width="100px" alt="")
                         div(class="user-info")
                             div(class="user-info-name my-2") #{user.fullName} 
                             div(class="user-info-button my-2")
-                                button(class="btn btn-add-friend btn-sm btn-primary" id-user-add=user._id) Kết bạn
-                                button(class="btn btn-cancel-friend btn-sm btn-secondary" id-user-cancel=user._id) Hủy
+                                button(class="btn btn-appcept-add-friend btn-sm btn-primary" id-user-appcept-add=user._id) Chấp nhận
+                                button(class="btn btn-cancel-appcept-add-friend btn-sm btn-secondary mx-2" id-user-appcept-cancel=user._id) Xóa
     script(src="/socket.io/socket.io.js")
-    script(src="/js/socket.js") 
+    script(src="/js/socket.js")
     script(src="/js/users.js")
+   
 
 
 

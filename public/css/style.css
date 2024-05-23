@@ -104,6 +104,7 @@
     display: flex;
     align-items: center;
     border: 1px solid gray;
+    position: relative;
 }
 .btn-cancel-friend,.btn-add-friend{
     padding: 5px 15px;
@@ -116,4 +117,20 @@
 }
 .box-user.add .btn-cancel-friend{
     display: inline-block;
+}
+.accept-length{
+    position: absolute;
+    
+}
+.accept-friends{
+    position: relative;
+}
+.box-user .inner-statusOnline[statusOnline="online"]{
+    padding: 10px;
+    background-color: green;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px
 }

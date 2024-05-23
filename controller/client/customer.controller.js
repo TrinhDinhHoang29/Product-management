@@ -40,12 +40,30 @@ module.exports.loginPost = async(req,res)=>{
         res.cookie("cartId",cart._id);
     }
     res.cookie("tokenCustomer",customer.tokenCustomer);
+    await customerModel.updateOne({
+        tokenCustomer:customer.tokenCustomer
+    },{
+        statusOnline:"online"
+    });
+    _io.once('connection',(socket) => {
+        socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE",customer._id);
+    });
     res.redirect("/");
 }
-module.exports.logout = (req,res)=>{
+module.exports.logout = async(req,res)=>{
+    await customerModel.updateOne({
+        tokenCustomer:req.cookies.tokenCustomer
+    },{
+        statusOnline:"offline"
+    });
+    const customer = await customerModel.findOne({tokenCustomer:req.cookies.tokenCustomer}).select("_id");
+    _io.once('connection',(socket) => {
+        socket.broadcast.emit("SERVER_RETURN_STATUS_OFFLINE",customer._id);
+    });
     res.clearCookie("tokenCustomer");
     res.clearCookie("cartId");
     res.redirect("/customer/login");
+    
 }
 module.exports.forgotPassword = async(req,res)=>{
     res.render("client/pages/customer/forgotPassword");

@@ -9,6 +9,7 @@ const customerSchema = new mongoose.Schema({
     requestAddFriends:Array,
     appceptAddFriends:Array,
     listFriend:Array,
+    statusOnline:String,
     status:{
         type:String,
         default:"active"

@@ -15,14 +15,14 @@ block main
         .row 
             each user in users
                 .col-4 
-                    div(class="box-user add")
+                    div(class="box-user" boxUserFriendId=user.id)
                         div(class="avatar")
                             img(src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg" width="100px" alt="")
                         div(class="user-info")
                             div(class="user-info-name my-2") #{user.fullName} 
                             div(class="user-info-button my-2")
-                                button(class="btn btn-add-friend btn-sm btn-primary" id-user-add=user._id) Kết bạn
-                                button(class="btn btn-cancel-friend btn-sm btn-secondary" id-user-cancel=user._id) Hủy
+                                button(class="btn btn-appcept-add-friend btn-sm btn-secondary") Bạn bè
+                        div(class="inner-statusOnline" statusOnline=user.statusOnline) 
     script(src="/socket.io/socket.io.js")
     script(src="/js/socket.js") 
     script(src="/js/users.js")
