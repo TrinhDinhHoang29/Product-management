@@ -1,5 +1,7 @@
 const usersModel = require("../../models/customer.model");
-module.exports = (res)=>{
+const chatRoomModel = require("../../models/roomChat.model");
+
+module.exports = (req,res)=>{
     const cancelAdd = async(myId,idUserCancelAdd)=>{
         const checkRequestA = await usersModel.findOne({_id:myId,requestAddFriends:idUserCancelAdd});
             if(checkRequestA){
@@ -65,18 +67,41 @@ module.exports = (res)=>{
             //End Hiển thị realTime lời cancel kết bạn của ông A qua ông B
  
         })
+
         socket.on("CLIENT_APPCEPT_ADD_FRIEND",async (idAppceptUserAdd)=>{
             //Kiểm tra trong list bạn bè của a có B chưa
             // và ngược lại
             // =>Thêm
             const myId = res.locals.customerInfo.id;
             const checkListFriendA = await usersModel.findOne({id:myId,listFriend:idAppceptUserAdd});
+            const checkListFriendB = await usersModel.findOne({id:idAppceptUserAdd,listFriend:myId});
+            //Tạo ra room chat khi chấp nhận kết bạn
+            let roomChat;
+            if(!checkListFriendA&&!checkListFriendB){
+                const objectRoomChat = {
+                    typeRoom:"Friends",
+                    users:[
+                        {
+                            user_id:myId,
+                            role:"admin",
+                        }, {
+                            user_id:idAppceptUserAdd,
+                            role:"admin",
+                        }
+                    ]
+                 
+                }
+                 roomChat  = new chatRoomModel(objectRoomChat);
+                 await roomChat.save();
+            }
+                //END Tạo ra room chat khi chấp nhận kết bạn
+
             if(!checkListFriendA){
                 await usersModel.updateOne({_id:myId},{
                     $push:{
                         listFriend:{
                             customer_id:idAppceptUserAdd,
-                            room_chat_id:"",
+                            room_chat_id:roomChat.id,
                     }
                 },
                     $pull:{appceptAddFriends:idAppceptUserAdd}
@@ -91,16 +116,17 @@ module.exports = (res)=>{
             socket.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);
             // End hiển thị số lượng lời chấp nhận khi chấp nhận kết bạn
 
-            const checkListFriendB = await usersModel.findOne({id:idAppceptUserAdd,listFriend:myId});
             if(!checkListFriendB){
                 await usersModel.updateOne({_id:idAppceptUserAdd},{
                     $push:{
                         listFriend:{
                             customer_id:myId,
-                            room_chat_id:"", 
+                            room_chat_id:roomChat.id, 
                         }
                     },
-                    $pull:{requestAddFriends:idAppceptUserAdd}
+                    $pull:{
+                        requestAddFriends:idAppceptUserAdd
+                    }
                 })
             }
            await cancelAdd(idAppceptUserAdd,myId);                   

@@ -8,14 +8,14 @@ const orderRoutes = require("./checkout.route");
 const customerRoutes = require("./customer.route");
 const chatRoutes = require("./chat.route");
 const usersRoutes = require("./users.route");
-
+// const closeTab = require("../../middlewares/closeTab.middleware");
 const authClient = require("../../middlewares/authClient.middleware");
 const customerMiddlewares = require("../../middlewares/customer.middleware");
-
 module.exports = (app)=>{
 app.use(cartMiddleware.cartId);
 app.use(customerMiddlewares.login);
 app.use(menuProductsCategory.menuProductsCategory);
+// app.use(closeTab.closeTab);
 app.use("/",homeRoutes);
 app.use("/products",productsRoutes);
 app.use("/search",searchRoutes);

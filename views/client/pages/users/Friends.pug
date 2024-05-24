@@ -21,10 +21,9 @@ block main
                         div(class="user-info")
                             div(class="user-info-name my-2") #{user.fullName} 
                             div(class="user-info-button my-2")
-                                button(class="btn btn-appcept-add-friend btn-sm btn-secondary") Bạn bè
+                                a(class="btn btn-appcept-add-friend btn-sm btn-primary" href=`/chat/${user.roomChatId}`) Nhắn tin                   
                         div(class="inner-statusOnline" statusOnline=user.statusOnline) 
-    script(src="/socket.io/socket.io.js")
-    script(src="/js/socket.js") 
+    
     script(src="/js/users.js")
 
 
