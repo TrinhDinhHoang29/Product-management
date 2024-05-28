@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/interface-products.pug
+include ../../../admin/mixins/messages-success.pug
+
+block main
+    +messages-success(5000)
+    +messages-error(5000)
+    .container.my-3
+        include ../../partials/list-control-users.pug
+    .container.my-3 
+        .row 
+            .col-6 
+                +box-head("Tạo nhóm chat")        
+    .container.my-3 
+        h1 Danh sách bạn bè
+        form(action="/users/Create-Group-Chat", method="post" class="form-group" enctype="multipart/form-data") 
+            div(class="form-group my-3") 
+                label(for="title") Tên nhóm chat: 
+                input(type="text" name="title" class="mx-3")
+            div(class="mb-3" upload-image) 
+                label(class="form-label") avatar: 
+                input(type="file" accept="image/*" class="form-file mx-3" name="avatar" value="" upload-image-input)
+                div
+                    div(class = "" close-image-upload) x 
+                    img(src="#"  alt="" upload-image-preview width="200px" class="d-inline" max-height="200px")
+            each friend in friends
+                div(class="box-user" boxUserFriendId=friend.id)
+                            div(class="avatar")
+                                img(src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg" width="100px" alt="")
+                            div(class="user-info")
+                                div(class="user-info-name my-2") #{friend.fullName}
+                            div(class="m-3") 
+                                input(type="checkbox", name="chkIdFriend" value=friend.id)
+            div.text-center 
+                input(type="submit" class="btn btn-primary my-3" value="Tạo nhóm")
+    
+    script(src="/js/users.js")
+
+
+
+

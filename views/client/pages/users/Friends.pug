@@ -9,13 +9,15 @@ block main
         include ../../partials/list-control-users.pug
     .container.my-3 
         .row 
-            .col-12
+            .col-6 
                 +box-head("Danh sách người dùng")
+                a(href="/users/Create-Group-Chat" class = "btn btn-outline-success") + Tạo nhóm 
+        
     .container.my-3 
         .row 
             each user in users
                 .col-4 
-                    div(class="box-user" boxUserFriendId=user.id)
+                    div(class="box-user" boxUserFriendId=user._id)
                         div(class="avatar")
                             img(src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg" width="100px" alt="")
                         div(class="user-info")

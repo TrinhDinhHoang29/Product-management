@@ -1,5 +1,6 @@
 const customersModel = require("../../models/customer.model");
 const userSocket = require("../../socket/client/user.socket");
+const roomChatModel = require("../../models/roomChat.model");
 module.exports.notFriends = async(req,res)=>{
     const myId = res.locals.customerInfo._id;
     const arrayRequest = await customersModel.findOne({_id:myId}).select("requestAddFriends appceptAddFriends listFriend");
@@ -18,7 +19,7 @@ module.exports.notFriends = async(req,res)=>{
     // const users = await customersModel.find({_id:{$ne:myId}});
     // console.log(users);
     res.render("client/pages/users/not-friends",{users:users});
-    userSocket(req,res);
+    userSocket(res);
 }
 module.exports.requestAddFriends = async(req,res)=>{
     const myId = res.locals.customerInfo._id;
@@ -29,7 +30,7 @@ module.exports.requestAddFriends = async(req,res)=>{
         deleted:false
     }).select("_id fullName");
     res.render("client/pages/users/Request-Add-Friends",{users:users});
-    userSocket(req,res);
+    userSocket(res);
 }
 module.exports.appceptAddFriends = async (req,res)=>{
     const myId = res.locals.customerInfo._id;
@@ -43,7 +44,7 @@ module.exports.appceptAddFriends = async (req,res)=>{
     }).select("_id fullName");
     
     res.render("client/pages/users/Appcept-Add-Friends",{users:users});
-    userSocket(req,res);
+    userSocket(res);
 }
 module.exports.friends = async(req,res)=>{
     const myId = res.locals.customerInfo._id;
@@ -65,4 +66,37 @@ module.exports.friends = async(req,res)=>{
         user.roomChatId = roomChat.room_chat_id;
     }
     res.render("client/pages/users/Friends",{users:users}); 
+}
+module.exports.createGroupChat = async (req,res)=>{
+    const arrIdUserFriend = res.locals.customerInfo.listFriend.map(item=>item.customer_id);
+    const friends = await customersModel.find({
+        _id:{
+            $in:arrIdUserFriend
+        }
+    }).select("id fullName");
+    res.render("client/pages/users/create-group-chat",{friends:friends});
+}
+module.exports.createGroupChatPost = async (req,res)=>{
+    const idMemberRoomChats = req.body.chkIdFriend;
+    let users = [{
+        user_id:res.locals.customerInfo.id,
+        role:"admin"
+    }];
+    idMemberRoomChats.forEach((item)=>{
+        let objUser = {
+            user_id:item,
+            role:"member"
+        }
+        users.push(objUser);
+    });
+    const objectRoomChat = {
+        title:req.body.title,
+        typeRoom:"Group",
+        avatar:req.body.avatar,
+        users:users
+     
+    }
+    const roomChat  = new roomChatModel(objectRoomChat);
+    await roomChat.save();
+    res.redirect(`/chat/${roomChat.id}`);    
 }

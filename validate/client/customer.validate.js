@@ -38,3 +38,11 @@ module.exports.comfirmOtp = async (req,res,next)=>{
     }
     next();
 }
+module.exports.checkCreateGroupChat = (req,res,next)=>{
+    if(!req.body.title||!req.body.avatar||!req.body.chkIdFriend){
+        req.flash("error","Error !");
+        res.redirect("back");
+        return;
+    }
+    next();
+}

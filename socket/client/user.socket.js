@@ -1,7 +1,7 @@
 const usersModel = require("../../models/customer.model");
 const chatRoomModel = require("../../models/roomChat.model");
 
-module.exports = (req,res)=>{
+module.exports = (res)=>{
     const cancelAdd = async(myId,idUserCancelAdd)=>{
         const checkRequestA = await usersModel.findOne({_id:myId,requestAddFriends:idUserCancelAdd});
             if(checkRequestA){
