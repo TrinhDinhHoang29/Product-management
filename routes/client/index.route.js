@@ -11,6 +11,7 @@ const usersRoutes = require("./users.route");
 // const closeTab = require("../../middlewares/closeTab.middleware");
 const authClient = require("../../middlewares/authClient.middleware");
 const customerMiddlewares = require("../../middlewares/customer.middleware");
+const storageMessageMiddleware = require("../../middlewares/storageMessage.middleware");
 module.exports = (app)=>{
 app.use(cartMiddleware.cartId);
 app.use(customerMiddlewares.login);
@@ -23,6 +24,6 @@ app.use("/cart",cartRoutes);
 app.use("/checkout",orderRoutes);
 app.use("/customer",customerRoutes);
 app.use("/chat",authClient.checkLogin,chatRoutes);
-app.use("/users",authClient.checkLogin,usersRoutes);
+app.use("/users",authClient.checkLogin,storageMessageMiddleware.storageMessage,usersRoutes);
 
 }

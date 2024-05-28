@@ -8,3 +8,12 @@ ul(class="row list-control-users text-center my-3")
     li.col 
         a(href="/users/Appcept-Add-Friends" class="btn btn-primary accept-friends") Lời mời kết bạn
             span(class ="badge badge-danger accept-length" accept-length=customerInfo._id) #{customerInfo.appceptAddFriends.length}
+    li.col.parrent-storage-message 
+        a(href="" class="btn btn-primary button-storage-message") 
+            i(class="fa-regular fa-message")
+        div.storage-message 
+            each mes in storageMessage 
+                div(class ="row my-2")
+                    div.col #{mes.title}
+                    div.col
+                        a(href=`/chat/${mes._id}` class="btn btn-primary") Nhắn tin  

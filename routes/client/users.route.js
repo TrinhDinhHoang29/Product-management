@@ -14,4 +14,5 @@ router.get("/Appcept-Add-Friends",usersController.appceptAddFriends);
 router.get("/Friends",usersController.friends);
 router.get("/Create-Group-Chat",usersController.createGroupChat);
 router.post("/Create-Group-Chat",upload.single('avatar'),uploadFileMiddleware.uploadCloud,customerValidate.checkCreateGroupChat,usersController.createGroupChatPost);
+
 module.exports = router;

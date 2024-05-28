@@ -134,3 +134,18 @@
     right: 0;
     margin: 10px
 }
+.button-storage-message{
+}
+.parrent-storage-message{
+    position: relative;
+}
+.parrent-storage-message:hover .storage-message{
+    display: block;
+}
+.storage-message{
+    position: absolute;
+    bottom: 100;
+    display: none;
+    width: 300px;
+    border: 1px solid;
+}
