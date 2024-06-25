@@ -3,6 +3,7 @@
     max-height: 450px;
     overflow-y: auto;
     position: relative;
+    height: 450px;
 }
 
 .inner-content {

@@ -83,8 +83,7 @@ block main
                 ul(class="pagination")
                     - if(objPagination.currentPage>1)
                         li(class="page-item")
-                            button(class="page-link" button-pagination=objPagination.currentPage-1 ) Trang trước
-                    
+                            button(class="page-link" button-pagination=objPagination.currentPage-1 ) Trang trước        
                     - for(let i =objPagination.pageStart;i<=objPagination.pageEnd;i++)
                         li(class="page-item")
                             button(class=`page-link ${objPagination.currentPage==i?"active":""}`  button-pagination=i) #{i}

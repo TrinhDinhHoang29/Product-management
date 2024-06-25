@@ -21,9 +21,6 @@ global._io = io;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 
-
-
-
 // flash------------------
 app.use(cookieParser("vadasd"));
 app.use(session({cookie:{maxAge:6000}}));

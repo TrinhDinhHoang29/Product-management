@@ -17,7 +17,5 @@ module.exports = (app)=>{
     app.use("/admin/users",tokenMiddlewares.checkToken,usersRouter);
     app.use("/admin/auth/",authRouter);
     app.use("/admin/blog",tokenMiddlewares.checkToken,blogRouter);
-    app.use("/admin/order",tokenMiddlewares.checkToken,orderRouter);
-
-    
+    app.use("/admin/order",tokenMiddlewares.checkToken,orderRouter);  
 }

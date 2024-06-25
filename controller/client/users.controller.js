@@ -4,7 +4,6 @@ const roomChatModel = require("../../models/roomChat.model");
 module.exports.notFriends = async(req,res)=>{
     const myId = res.locals.customerInfo._id;
     const arrayRequest = await customersModel.findOne({_id:myId}).select("requestAddFriends appceptAddFriends listFriend");
-    //console.log(arrayRequest);
     const arrCustomer_id = arrayRequest.listFriend.map(item=>item.customer_id)
     const users = await customersModel.find({
         $and:[

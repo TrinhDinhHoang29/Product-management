@@ -36,7 +36,7 @@ module.exports = (res)=>{
                 userId:idUserAdd,
                 lengthAcceptFriends:AcceptFriends.appceptAddFriends.length
             }
-            socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);
+            socket  ("SERVER_RETURN_LENGTH_ACCEPT_FRIENDS",lengthAcceptFriends);
             const infoB = await usersModel.findOne({_id:myId}).select("fullName").lean();
             infoB.userId = idUserAdd;
             socket.broadcast.emit("SERVER_RETURN_INFO_ACCEPT_FRIENDS",infoB);
